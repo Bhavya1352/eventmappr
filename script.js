@@ -1,9 +1,9 @@
 const events = [
-  { name: "Community Cleanup", type: "Volunteering", lat: 28.604047, lng: 77.227003 },
-  { name: "Local Music Night", type: "Music", lat: 28.626646, lng: 77.190096 },
-  { name: "Tech Meetup", type: "Technology", lat: 28.613999, lng: 77.226603 },
-  { name: "Farmers Market", type: "Market", lat: 28.616373, lng: 77.204582 },
-  { name: "Art & Craft Fair", type: "Art", lat: 28.601078, lng: 77.208121 },
+  { name: "Community Cleanup", type: "Volunteering",date:"12-10-2025",time:"19:57", lat: 28.604047, lng: 77.227003 },
+  { name: "Local Music Night", type: "Music",date:"12-10-2025",time:"19:57", lat: 28.626646, lng: 77.190096 },
+  { name: "Tech Meetup", type: "Technology",date:"12-10-2025",time:"19:57", lat: 28.613999, lng: 77.226603 },
+  { name: "Farmers Market", type: "Market",date:"12-10-2025",time:"19:57", lat: 28.616373, lng: 77.204582 },
+  { name: "Art & Craft Fair", type: "Art", date:"12-10-2025",time:"19:57",lat: 28.601078, lng: 77.208121 },
 ];
 
 let map = L.map("map").setView([28.6139, 77.2090], 13);
@@ -18,20 +18,24 @@ function renderMarkers(filteredEvents) {
   filteredEvents.forEach(event => {
     L.marker([event.lat, event.lng])
       .addTo(markerGroup)
-      .bindPopup(`<strong>${event.name}</strong><br>Type: ${event.type}`);
+      .bindPopup(`<strong>${event.name}</strong><br>Type: ${event.type}<br>Date:${event.date}<br>Time:${event.time}`);
   });
 }
 
 renderMarkers(events);
 
 document.getElementById("eventForm").addEventListener("submit", function (e) {
+ 
   e.preventDefault();
   const name = document.getElementById("eventName").value;
   const type = document.getElementById("eventType").value;
+  const date = document.getElementById('eventDate').value
+  const time = document.getElementById('eventTime').value
 
   map.once("click", function (event) {
     const { lat, lng } = event.latlng;
-    const newEvent = { name, type, lat, lng };
+    const newEvent = { name, type, date,time, lat, lng };
+
     events.push(newEvent);
     renderMarkers(events);
     alert("Event added at clicked location!");
