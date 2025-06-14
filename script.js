@@ -6,6 +6,11 @@ const events = [
   { name: "Art & Craft Fair", type: "Art", lat: 28.601078, lng: 77.208121 },
 ];
 
+  const btn = document.getElementById('theme-toggle');
+  btn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme')
+  });
+
 let map = L.map("map").setView([28.6139, 77.2090], 13);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: '&copy; OpenStreetMap contributors',
