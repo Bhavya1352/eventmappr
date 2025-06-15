@@ -35,10 +35,97 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 const markerGroup = L.layerGroup().addTo(map);
 
+// Custom icons for different event types
+const redIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+const blueIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+const greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+const violetIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+const orangeIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+function getIconByType(type) {
+  const icons = {
+    Music: violetIcon,
+    Volunteering: orangeIcon,
+    Technology: blueIcon,
+    Market: greenIcon,
+    Art: redIcon,
+  };
+  return icons[type] || blueIcon; // Default if unknown
+}
+const legend = L.control({ position: 'bottomleft' });
+
+// Create a custom legend control
+legend.onAdd = function (map) {
+  const div = L.DomUtil.create('div', 'info legend');
+  const types = ['Music', 'Volunteering', 'Technology', 'Market', 'Art'];
+  const labels = [];
+
+  const iconUrls = {
+    Music: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
+    Volunteering: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png',
+    Technology: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+    Market: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+    Art: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+  };
+
+  types.forEach((type) => {
+    labels.push(
+      `<div style="display: flex; align-items: center; margin-bottom: 4px;">
+         <img src="${iconUrls[type]}" height="25" style="margin-right: 8px;"> ${type}
+       </div>`
+    );
+  });
+
+  div.innerHTML = labels.join('');
+  return div;
+};
+
+legend.addTo(map);
+
 function renderMarkers(filteredEvents) {
   markerGroup.clearLayers();
   filteredEvents.forEach((event) => {
-    const marker = L.marker([event.lat, event.lng]).addTo(markerGroup);
+    const icon = getIconByType(event.type);
+    const marker = L.marker([event.lat, event.lng], { icon }).addTo(markerGroup);
 
     // Create enhanced popup content with better styling
     const popupContent = `

@@ -217,3 +217,15 @@ footer a:hover {
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(76, 0, 229, 0.5), 0 0 12px rgba(37, 2, 48, 0.6);
   }
+
+
+.info.legend {
+  background: rgba(0, 0, 0, 0.465);
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  font-size: 14px;
+  color: white;
+  font-size: 0.8rem;
+  padding-right: 50px;
+}
