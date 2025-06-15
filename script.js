@@ -55,9 +55,8 @@ function renderMarkers(filteredEvents) {
           border-radius: 15px 15px 0 0;
           margin: -5px -5px 10px -5px;
         ">
-          <strong style="font-size: 18px; font-weight: 600;">${
-            event.name
-          }</strong>
+          <strong style="font-size: 18px; font-weight: 600;">${event.name
+      }</strong>
         </div>
         <div style="padding: 0 10px;">
           <div style="
@@ -72,6 +71,10 @@ function renderMarkers(filteredEvents) {
           ">
             ${event.type}
           </div>
+          <div style="font-size: 13px; margin-top: 8px; color: #555;">
+  📅 ${event.dateTime || "Not specified"}
+</div>
+
           <br>
           <a href="event-details.html?event=${encodeURIComponent(event.name)}" 
              style="
@@ -113,50 +116,9 @@ document.getElementById("eventForm").addEventListener("submit", function (e) {
   const controls = document.querySelector(".controls");
   const name = document.getElementById("eventName").value;
   const type = document.getElementById("eventType").value;
-  const locationmsg = document.createElement("div");
-  locationmsg.style.padding = "12px 24px";
-  locationmsg.textContent =
-    "📍 Now click on the map to select the event location.";
-  locationmsg.style.background =
-    "linear-gradient(135deg, rgba(21, 21, 65, 0.85), rgba(52, 12, 87, 0.7))";
-  locationmsg.style.zIndex = "1000";
-  locationmsg.style.position = "fixed";
-  locationmsg.style.top = "100px";
-  locationmsg.style.left = "50%";
-  locationmsg.style.transform = "translateX(-50%)";
-  locationmsg.style.backdropFilter = "blur(12px)";
-  locationmsg.style.border = "1px solid rgba(255, 255, 255, 0.1)";
-  locationmsg.style.boxShadow = "0 8px 22px rgba(0, 0, 0, 0.4)";
-  locationmsg.style.color = "#e4d4ff";
-  locationmsg.style.fontWeight = "500";
-  locationmsg.style.opacity = "1";
-  locationmsg.style.transition = "opacity 1s ease-in-out all";
-  locationmsg.style.borderRadius = "8px";
-  locationmsg.style.overflow = "hidden";
-  // progeress bar
-  const progeressBar = document.createElement("div");
-  progeressBar.style.position = "absolute";
-  progeressBar.style.bottom = "0";
-  progeressBar.style.left = "0";
-  progeressBar.style.height = "4px";
-  progeressBar.style.background = "linear-gradient(90deg, #a64eff, #da5cff)";
-  progeressBar.style.width = "100%";
-  progeressBar.style.animation = "shrink 4s linear backwards";
-  //adding key frames
-  const style = document.createElement("style");
-  style.innerHTML = `
-    @keyframes shrink{
-    from{width:100%;}
-    to{width:0;}
-    }
-    `;
-  document.head.appendChild(style);
-  locationmsg.appendChild(progeressBar);
-  controls.appendChild(locationmsg);
-  setTimeout(() => {
-    locationmsg.style.opacity = "0";
-    locationmsg.remove();
-  }, 4000);
+  const date = document.getElementById("eventDate").value;
+  const time = document.getElementById("eventTime").value;
+
 
   map.once("click", function (event) {
     const { lat, lng } = event.latlng;
@@ -168,7 +130,7 @@ document.getElementById("eventForm").addEventListener("submit", function (e) {
       // Add additional details for new events
       description: `A ${type.toLowerCase()} event. More details coming soon!`,
       address: "Location details to be announced",
-      dateTime: "Date and time to be announced",
+      dateTime: `${date} ${time}`,
       organizer: "Event Organizer",
       contact: "Contact information to be announced",
       photos: [], // Initialize empty photos array
@@ -202,16 +164,16 @@ document.getElementById("eventForm").addEventListener("submit", function (e) {
     toast.style.zIndex = "9999";
     toast.style.transition =
       "opacity 0.5s ease, transform 0.5s  ease";
-      document.body.appendChild(toast);
-      requestAnimationFrame(()=>{
-      toast.style.opacity="1";
-      toast.style.transform=" translate(-50%) translateY(0)";
-      });
-      setTimeout(() => {
-        toast.style.opacity="0";
-        toast.style.transform="translateX(-50%) translateY(100px)";
-        setTimeout(()=>toast.remove(),1000);
-      },4000);
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => {
+      toast.style.opacity = "1";
+      toast.style.transform = " translate(-50%) translateY(0)";
+    });
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.transform = "translateX(-50%) translateY(100px)";
+      setTimeout(() => toast.remove(), 1000);
+    }, 4000);
 
     // Show success message with option to view details
     const viewDetails = document.createElement("div");
@@ -284,7 +246,7 @@ document.getElementById("locateBtn").addEventListener("click", function () {
 
       const nearbyEvents = events.filter((e) => {
         const distance = getDistance(userLat, userLng, e.lat, e.lng);
-        return distance <= 2; // 2 km
+        return distance <= 2; // within 2km
       });
 
       renderMarkers(nearbyEvents);
