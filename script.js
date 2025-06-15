@@ -55,9 +55,8 @@ function renderMarkers(filteredEvents) {
           border-radius: 15px 15px 0 0;
           margin: -5px -5px 10px -5px;
         ">
-          <strong style="font-size: 18px; font-weight: 600;">${
-            event.name
-          }</strong>
+          <strong style="font-size: 18px; font-weight: 600;">${event.name
+      }</strong>
         </div>
         <div style="padding: 0 10px;">
           <div style="
@@ -72,6 +71,10 @@ function renderMarkers(filteredEvents) {
           ">
             ${event.type}
           </div>
+          <div style="font-size: 13px; margin-top: 8px; color: #555;">
+  📅 ${event.dateTime || "Not specified"}
+</div>
+
           <br>
           <a href="event-details.html?event=${encodeURIComponent(event.name)}" 
              style="
@@ -113,6 +116,9 @@ document.getElementById("eventForm").addEventListener("submit", function (e) {
   const controls = document.querySelector(".controls");
   const name = document.getElementById("eventName").value;
   const type = document.getElementById("eventType").value;
+  const date = document.getElementById("eventDate").value;
+  const time = document.getElementById("eventTime").value;
+
 
   map.once("click", function (event) {
     const { lat, lng } = event.latlng;
@@ -124,7 +130,7 @@ document.getElementById("eventForm").addEventListener("submit", function (e) {
       // Add additional details for new events
       description: `A ${type.toLowerCase()} event. More details coming soon!`,
       address: "Location details to be announced",
-      dateTime: "Date and time to be announced",
+      dateTime: `${date} ${time}`,
       organizer: "Event Organizer",
       contact: "Contact information to be announced",
       photos: [], // Initialize empty photos array
@@ -158,16 +164,16 @@ document.getElementById("eventForm").addEventListener("submit", function (e) {
     toast.style.zIndex = "9999";
     toast.style.transition =
       "opacity 0.5s ease, transform 0.5s  ease";
-      document.body.appendChild(toast);
-      requestAnimationFrame(()=>{
-      toast.style.opacity="1";
-      toast.style.transform=" translate(-50%) translateY(0)";
-      });
-      setTimeout(() => {
-        toast.style.opacity="0";
-        toast.style.transform="translateX(-50%) translateY(100px)";
-        setTimeout(()=>toast.remove(),1000);
-      },4000);
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => {
+      toast.style.opacity = "1";
+      toast.style.transform = " translate(-50%) translateY(0)";
+    });
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.transform = "translateX(-50%) translateY(100px)";
+      setTimeout(() => toast.remove(), 1000);
+    }, 4000);
 
     // Show success message with option to view details
     const viewDetails = document.createElement("div");
