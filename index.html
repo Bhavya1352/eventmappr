@@ -12,17 +12,126 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- GSAP Core -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- GSAP Plugins -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 </head>
 <body>
-<header>
-  <div class="header-title">
-      <h1>🗺️ EventMappr</h1>
-    <p class="tagline ">Discover & Share Local Events</p>
-</header>
 
+ <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">🗺️ EventMappr</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
+          <li class="nav-item"><a class="nav-link" href="#map-section">Map</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
+  <!-- Hero Section -->
+  <section id="hero" class="hero-section flex-center">
+    <div class="hero-card">
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1 class="hero-title">A new way to discover & share events</h1>
+          <p class="hero-subtitle">EventMappr helps you find, pin, and share local happenings with your community. Start exploring or add your own event now!</p>
+          <div class="hero-btn-group">
+            <a href="#map-section" class="btn btn-primary hero-btn">Start Exploring</a>
+            <a href="#features" class="btn btn-outline hero-btn">Learn More</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><span class="stat-value">2,500+</span><span class="stat-label">Events</span></div>
+            <div class="hero-stat"><span class="stat-value">1,200+</span><span class="stat-label">Users</span></div>
+            <div class="hero-stat"><span class="stat-value">50+</span><span class="stat-label">Cities</span></div>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-img-grid">
+            <div class="hero-img-box"><img src="./assets/heropage.jpg" alt="Event Crowd"></div>
+            <!-- Floating icons -->
+            <span class="hero-float-icon icon-star">★</span>
+            <span class="hero-float-icon icon-pin">📍</span>
+            <span class="hero-float-icon icon-share">🔗</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- Features Section -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <h2 class="section-title text-center">Features</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">📌</div>
+            <h3>Pin Events</h3>
+            <p>Add your events to the map for everyone to see</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3>Explore</h3>
+            <p>Discover exciting events happening around you</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">📢</div>
+            <h3>Share</h3>
+            <p>Share the events with your community</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works-section">
+    <div class="container">
+      <h2 class="section-title text-center">How It Works</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Add Your Event</h3>
+            <p>Fill in the event details and location</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Pin on Map</h3>
+            <p>Your event appears on the interactive map</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Share & Connect</h3>
+            <p>Let others discover your event</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <!-- Map Section -->
+  <section id="map-section">
+    <div class="container">
+      <h2 class="section-title text-center">Explore Events</h2>
   <div class="controls">
     <form id="eventForm">
       <input  class="input" type="text" id="eventName" placeholder="Event name" required />
@@ -37,81 +146,87 @@
      <button type="submit" class="btn btn-primary d-flex align-items-center gap-2">
   Add Event  <span>➕</span> 
 </button>
-
     </form>
-      </select>
    <button id="locateBtn" class="btn btn-danger d-flex align-items-center gap-2">
    Find Nearby <span>📍</span> 
 </button>
     </div>
+      <div id="map"></div>
   </div>
+  </section>
 
-  <div id="map"></div>
-
+  <!-- Footer -->
   <footer>
     <p>Built with ❤️ using <a href="https://leafletjs.com/" target="_blank">Leaflet.js</a></p>
     <p>&copy; 2025 EventMappr | <a href="https://github.com/Bhavya1352/eventmappr" target="_blank">GitHub</a> | <a href="#privacy-policy">Privacy Policy</a> | <a href="#contact">Contact Us</a></p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
   <script>
-    // Initialize GSAP animations
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // Header animation
-    gsap.from(".header-title", {
-      duration: 1,
-      y: -50,
-      opacity: 0,
-      ease: "power3.out"
-    });
-
-    // Controls animation
-    gsap.from(".controls", {
-      duration: 1,
-      y: 30,
-      opacity: 0,
-      delay: 0.3,
-      ease: "power3.out"
-    });
-
-    // Map container animation
-    gsap.from("#map", {
-      duration: 1.2,
-      scale: 0.95,
-      opacity: 0,
-      delay: 0.5,
-      ease: "power3.out"
-    });
-
-    // Footer animation
-    gsap.from("footer", {
-      duration: 1,
-      y: 30,
-      opacity: 0,
-      delay: 0.7,
-      ease: "power3.out"
-    });
-
-    // Button hover animations
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(button => {
-      button.addEventListener('mouseenter', () => {
-        gsap.to(button, {
-          duration: 0.3,
-          scale: 1.05,
-          boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
-          ease: "power2.out"
+    document.addEventListener('DOMContentLoaded', function() {
+      // Register GSAP plugins
+      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+      
+      // Navbar animation
+      gsap.from('.navbar', {opacity: 0, y: -40, duration: 1, ease: 'power3.out'});
+      
+      // Hero section
+      gsap.from('.hero-title', {opacity: 0, y: 40, duration: 1, ease: 'power3.out'});
+      gsap.from('.hero-subtitle', {opacity: 0, y: 40, duration: 1, delay: 0.2, ease: 'power3.out'});
+      gsap.from('.hero-btn-group', {opacity: 0, y: 30, duration: 0.8, delay: 0.5, ease: 'power3.out'});
+      gsap.from('.hero-stats .hero-stat', {
+        opacity: 0,
+        y: 30,
+        duration: 0.7,
+        stagger: 0.15,
+        delay: 0.7,
+        ease: 'power3.out'
+      });
+      gsap.from('.hero-img-box', {opacity: 0, scale: 0.85, duration: 1, delay: 0.7, ease: 'power3.out'});
+      
+      // Floating icons GSAP animation
+      gsap.utils.toArray('.hero-float-icon').forEach((icon, i) => {
+        gsap.to(icon, {
+          y: 18,
+          repeat: -1,
+          yoyo: true,
+          duration: 2 + i,
+          ease: 'sine.inOut',
+          delay: i * 0.3
         });
       });
       
-      button.addEventListener('mouseleave', () => {
-        gsap.to(button, {
-          duration: 0.3,
-          scale: 1,
-          boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
-          ease: "power2.out"
+      // Features section animation
+      gsap.utils.toArray('.feature-card').forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          delay: i * 0.15,
+          ease: 'power3.out'
+        });
+      });
+      
+      // How it works section animation
+      gsap.utils.toArray('.step-card').forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          delay: i * 0.15,
+          ease: 'power3.out'
         });
       });
     });
