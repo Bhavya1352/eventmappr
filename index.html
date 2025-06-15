@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EventMappr – Community Events</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EventMappr – Community Events</title>
@@ -15,7 +23,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
+
 <body>
+
+    <header>
+        <h1>🗺️ EventMappr</h1>
+        <p>Discover & Share Local Events</p>
+    </header>
+
+    <div class="controls">
+        <form id="eventForm">
+            <input type="text" id="eventName" placeholder="Event name" required />
+            <select id="eventType" required>
+
 <header>
   <div class="header-title">
       <h1>🗺️ EventMappr</h1>
@@ -27,6 +47,7 @@
     <form id="eventForm">
       <input  class="input" type="text" id="eventName" placeholder="Event name" required />
       <select class="input" id="eventType" required>
+
         <option value="">Type</option>
         <option value="Music">Music</option>
         <option value="Volunteering">Volunteering</option>
@@ -34,6 +55,26 @@
         <option value="Market">Market</option>
         <option value="Art">Art</option>
       </select>
+
+            <button type="submit">➕ Add Event</button>
+        </form>
+
+
+
+        <div class="filter-group">
+            <select id="filterType">
+        <option value="All">All Events</option>
+        <option value="Music">Music</option>
+        <option value="Volunteering">Volunteering</option>
+        <option value="Technology">Technology</option>
+        <option value="Market">Market</option>
+        <option value="Art">Art</option>
+      </select>
+            <button id="locateBtn">📍 Find Nearby</button>
+            <button onclick="window.location.href='events.html'" class="eventlist">📋 View All Events</button>
+        </div>
+
+
      <button type="submit" class="btn btn-primary d-flex align-items-center gap-2">
   Add Event  <span>➕</span> 
 </button>
@@ -43,15 +84,19 @@
    <button id="locateBtn" class="btn btn-danger d-flex align-items-center gap-2">
    Find Nearby <span>📍</span> 
 </button>
+
     </div>
-  </div>
 
-  <div id="map"></div>
+    <div id="map"></div>
 
-  <footer>
-    <p>Built with ❤️ using <a href="https://leafletjs.com/" target="_blank">Leaflet.js</a></p>
-    <p>&copy; 2025 EventMappr | <a href="https://github.com/Bhavya1352/eventmappr" target="_blank">GitHub</a> | <a href="#privacy-policy">Privacy Policy</a> | <a href="#contact">Contact Us</a></p>
-  </footer>
+    <footer>
+        <p>Built with ❤️ using <a href="https://leafletjs.com/" target="_blank">Leaflet.js</a></p>
+        <p>&copy; 2025 EventMappr | <a href="https://github.com/Bhavya1352/eventmappr" target="_blank">GitHub</a> | <a href="#privacy-policy">Privacy Policy</a> | <a href="#contact">Contact Us</a></p>
+    </footer>
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
@@ -116,5 +161,7 @@
       });
     });
   </script>
+
 </body>
+
 </html>
