@@ -1,79 +1,202 @@
+/* --- COMMON STYLES FOR BOTH PAGES --- */
+
 body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #fafafa;
+    color: #333;
 }
 
+
+/* HEADER */
+
 header {
-  background-color: #4b0082;
-  color: white;
-  padding: 1rem;
-  text-align: center;
+    background-color: #4b0082;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
-  margin: 0.2rem 0;
+    margin: 0.2rem 0;
 }
 
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: #f0f0f0;
-  align-items: center;
-  justify-content: space-between;
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #e9ecef;
+    font-size: 0.95rem;
+    color: #333;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
+
+footer a {
+    color: #4b0082;
+    text-decoration: none;
+    margin: 0 0.4rem;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* CONTROLS BAR */
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #f0f0f0;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: inset 0 -1px 0 #ccc;
+}
+
+
+/* FORM AND FILTER GROUP */
 
 form,
 .filter-group {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 input,
 select,
 button {
-  padding: 0.5rem;
-  font-size: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #aaa;
+    transition: border-color 0.3s ease;
+}
+
+input:hover,
+select:hover,
+button:hover,
+input:focus,
+select:focus,
+button:focus {
+    border-color: #4b0082;
+    outline: none;
 }
 
 button {
-  background-color: #4b0082;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+    background-color: #4b0082;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #36006a;
+    background-color: #36006a;
 }
+
+
+/* BACK BUTTON (used on events.html) */
+
+a.button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #4b0082;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+a.button:hover {
+    background-color: #36006a;
+}
+
+
+/* MAP AREA (for index.html) */
 
 #map {
-  flex: 1;
-  width: 100%;
-  height: 70vh;
+    flex: 1;
+    width: 100%;
+    height: 70vh;
 }
 
-footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: #e9ecef;
-  font-size: 0.95rem;
-  color: #333;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+
+/* EVENTS LIST (for events.html) */
+
+ul#eventList {
+    list-style-type: none;
+    padding: 1rem 2rem;
+    margin: 1rem auto 2rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(75, 0, 130, 0.1);
+    border-radius: 8px;
+    max-width: 800px;
+    width: 90%;
 }
 
-footer a {
-  color: #4b0082;
-  text-decoration: none;
-  margin: 0 0.4rem;
+ul#eventList li {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+    cursor: default;
 }
 
-footer a:hover {
-  text-decoration: underline;
+ul#eventList li:last-child {
+    border-bottom: none;
+}
+
+ul#eventList li:hover {
+    background-color: #f5f0ff;
+}
+
+ul#eventList li strong {
+    font-size: 1.1rem;
+    color: #4b0082;
+}
+
+ul#eventList li small {
+    color: #666;
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+
+/* Responsive tweaks */
+
+@media (max-width: 600px) {
+    .controls {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    form,
+    .filter-group {
+        width: 100%;
+        justify-content: center;
+    }
+    a.back-link {
+        margin-left: 0;
+        text-align: center;
+    }
+    ul#eventList {
+        padding: 1rem;
+        width: 95%;
+    }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Events – EventMappr</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <header>
+        <h1>📋 All Events</h1>
+        <p>List of all events added to the map</p>
+    </header>
+
+    <div class="controls" style="justify-content: flex-start;">
+        <label for="sortOption"><strong>Sort By:</strong></label>
+        <select id="sortOption">
+      <option value="default">Default</option>
+      <option value="location">Location (Near Me)</option>
+    </select>
+        <a href="index.html" class="button" style="margin-left: auto;">← Back to Map</a>
+
+    </div>
+
+    <ul id="eventList" style="padding: 1rem; list-style-type: none;"></ul>
+
+    <footer>
+        <p>Built with ❤️ using <a href="https://leafletjs.com/" target="_blank">Leaflet.js</a></p>
+        <p>&copy; 2025 EventMappr | <a href="https://github.com/Bhavya1352/eventmappr" target="_blank">GitHub</a> | <a href="#privacy-policy">Privacy Policy</a> | <a href="#contact">Contact Us</a></p>
+    </footer>
+
+    <!-- ✅ Use only this single script now -->
+    <script src="script.js"></script>
+</body>
+
+</html>
