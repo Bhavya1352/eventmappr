@@ -13,8 +13,11 @@ const events = [
 
 // Load dynamic events from localStorage
 function loadDynamicEvents() {
-  const dynamicEvents = JSON.parse(localStorage.getItem("dynamicEvents") || "{}");
+  const dynamicEvents = JSON.parse(
+    localStorage.getItem("dynamicEvents") || "{}"
+  );
   Object.values(dynamicEvents).forEach((event) => {
+    // Check if event already exists to avoid duplicates
     const exists = events.find((e) => e.name === event.name);
     if (!exists) {
       events.push(event);
@@ -22,6 +25,7 @@ function loadDynamicEvents() {
   });
 }
 
+// Load dynamic events when page loads
 loadDynamicEvents();
 
 let map = L.map("map").setView([28.6139, 77.209], 13);
@@ -35,27 +39,70 @@ function renderMarkers(filteredEvents) {
   markerGroup.clearLayers();
   filteredEvents.forEach((event) => {
     const marker = L.marker([event.lat, event.lng]).addTo(markerGroup);
+
+    // Create enhanced popup content with better styling
     const popupContent = `
-      <div style="text-align: center; min-width: 250px; padding: 5px; font-family: 'Poppins', sans-serif;">
-        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; border-radius: 15px 15px 0 0; margin: -5px -5px 10px -5px;">
-          <strong style="font-size: 18px; font-weight: 600;">${event.name}</strong>
+      <div style="
+        text-align: center; 
+        min-width: 250px; 
+        padding: 5px;
+        font-family: 'Poppins', sans-serif;
+      ">
+        <div style="
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          color: white;
+          padding: 15px;
+          border-radius: 15px 15px 0 0;
+          margin: -5px -5px 10px -5px;
+        ">
+          <strong style="font-size: 18px; font-weight: 600;">${
+            event.name
+          }</strong>
         </div>
         <div style="padding: 0 10px;">
-          <div style="display: inline-block; background: rgba(102, 126, 234, 0.1); color: #667eea; padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: 500; margin-bottom: 15px;">
+          <div style="
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 15px;
+          ">
             ${event.type}
-          </div><br>
-          Date: ${event.date || "N/A"}<br>
-          Time: ${event.time || "N/A"}<br><br>
+          </div>
+          <br>
           <a href="event-details.html?event=${encodeURIComponent(event.name)}" 
-             style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 10px 20px; text-decoration: none; border-radius: 25px; font-size: 14px; font-weight: 500; display: inline-block; margin-top: 5px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);"
+             style="
+               background: linear-gradient(135deg, #667eea, #764ba2);
+               color: white; 
+               padding: 10px 20px; 
+               text-decoration: none; 
+               border-radius: 25px; 
+               font-size: 14px; 
+               font-weight: 500;
+               display: inline-block; 
+               margin-top: 5px; 
+               transition: all 0.3s ease;
+               box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+             "
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)';"
-             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)';">
-            <i class="fas fa-info-circle" style="margin-right: 5px;"></i>View Details
-          </a>
+             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)';"
+          >
+            <i class="fas fa-info-circle" style="margin-right: 5px;"></i>
+            View Details
+          </a
         </div>
       </div>
     `;
-    marker.bindPopup(popupContent, { maxWidth: 300, className: "custom-popup" });
+
+    marker.bindPopup(popupContent, {
+      maxWidth: 300,
+      className: "custom-popup",
+    });
+
+    // Remove the automatic redirect - only popup will show
   });
 }
 
@@ -66,116 +113,100 @@ document.getElementById("eventForm").addEventListener("submit", function (e) {
   const controls = document.querySelector(".controls");
   const name = document.getElementById("eventName").value;
   const type = document.getElementById("eventType").value;
-  const date = document.getElementById("eventDate").value;
-  const time = document.getElementById("eventTime").value;
-
-  const locationmsg = document.createElement("div");
-  locationmsg.style = `
-    padding: 12px 24px;
-    background: linear-gradient(135deg, rgba(21, 21, 65, 0.85), rgba(52, 12, 87, 0.7));
-    z-index: 1000;
-    position: fixed;
-    top: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
-    color: #e4d4ff;
-    font-weight: 500;
-    border-radius: 8px;
-    overflow: hidden;
-    opacity: 1;
-    transition: opacity 1s ease-in-out;
-  `;
-  locationmsg.textContent = "📍 Now click on the map to select the event location.";
-  const progressBar = document.createElement("div");
-  progressBar.style = `
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #a64eff, #da5cff);
-    width: 100%;
-    animation: shrink 4s linear backwards;
-  `;
-  const style = document.createElement("style");
-  style.innerHTML = `@keyframes shrink { from { width: 100%; } to { width: 0; } }`;
-  document.head.appendChild(style);
-  locationmsg.appendChild(progressBar);
-  controls.appendChild(locationmsg);
-  setTimeout(() => locationmsg.remove(), 4000);
 
   map.once("click", function (event) {
     const { lat, lng } = event.latlng;
-    const newEvent = { name, type, date, time, lat, lng };
+    const newEvent = {
+      name,
+      type,
+      lat,
+      lng,
+      // Add additional details for new events
+      description: `A ${type.toLowerCase()} event. More details coming soon!`,
+      address: "Location details to be announced",
+      dateTime: "Date and time to be announced",
+      organizer: "Event Organizer",
+      contact: "Contact information to be announced",
+      photos: [], // Initialize empty photos array
+    };
     events.push(newEvent);
 
-    const dynamicEvents = JSON.parse(localStorage.getItem("dynamicEvents") || "{}");
+    // Save to localStorage for persistence
+    const dynamicEvents = JSON.parse(
+      localStorage.getItem("dynamicEvents") || "{}"
+    );
     dynamicEvents[name] = newEvent;
     localStorage.setItem("dynamicEvents", JSON.stringify(dynamicEvents));
 
     renderMarkers(events);
 
+    //popup for confirmation of event added successfully
     const toast = document.createElement("div");
     toast.textContent = "🎉 Event added successfully!";
-    toast.style = `
-      position: fixed;
-      bottom: 40px;
-      left: 80%;
-      transform: translateX(-50%) translateY(30px);
-      padding: 12px 24px;
-      background: linear-gradient(135deg, #5b2be0, #ae31d9);
-      color: white;
-      font-weight: 600;
-      border-radius: 8px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-      opacity: 0;
-      z-index: 9999;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    `;
-    document.body.appendChild(toast);
-    requestAnimationFrame(() => {
-      toast.style.opacity = "1";
-      toast.style.transform = "translate(-50%) translateY(0)";
-    });
-    setTimeout(() => {
-      toast.style.opacity = "0";
-      toast.style.transform = "translateX(-50%) translateY(100px)";
-      setTimeout(() => toast.remove(), 1000);
-    }, 4000);
+    toast.style.position = "fixed";
+    toast.style.bottom = "40px";
+    toast.style.left = "80%";
+    toast.style.transform = "translateX(-50%) translateY(30px)";
+    toast.style.padding = "12px 24px";
+    toast.style.background = "linear-gradient(135deg, #5b2be0, #ae31d9)";
+    toast.style.color = "#fff";
+    toast.style.fontWeight = "600";
+    toast.style.borderRadius = "8px";
+    toast.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.3)";
+    toast.style.backdropFilter = "blur(10px)";
+    toast.style.opacity = "0";
+    toast.style.zIndex = "9999";
+    toast.style.transition =
+      "opacity 0.5s ease, transform 0.5s  ease";
+      document.body.appendChild(toast);
+      requestAnimationFrame(()=>{
+      toast.style.opacity="1";
+      toast.style.transform=" translate(-50%) translateY(0)";
+      });
+      setTimeout(() => {
+        toast.style.opacity="0";
+        toast.style.transform="translateX(-50%) translateY(100px)";
+        setTimeout(()=>toast.remove(),1000);
+      },4000);
 
+    // Show success message with option to view details
     const viewDetails = document.createElement("div");
+    viewDetails.style.padding = "18px 25px";
+    viewDetails.style.zIndex = "1000";
+    viewDetails.style.position = "fixed";
+    viewDetails.style.top = "100px";
+    viewDetails.style.left = "50%";
+    viewDetails.style.transform = "translateX(-50%)";
+    viewDetails.style.backdropFilter = "blur(10px)";
+    viewDetails.style.backgroundColor = "hsla(271,73%,44%,1)";
+    viewDetails.style.backgroundImage = `
+  radial-gradient(at 40% 40%, hsla(277, 80%, 50%, 0.5) 0px, transparent 60%),
+  radial-gradient(at 10% 20%, hsla(268, 100%, 45%, 0.5) 0px, transparent 55%),
+  radial-gradient(at 90% 85%, hsla(222, 100%, 50%, 0.5) 0px, transparent 60%)
+`;
+
+    viewDetails.style.border = "1px solid rgba(255, 255, 255, 0.3)";
+    viewDetails.style.boxShadow = "0 8px 32px rgba(0, 0, 0, 0.3)";
+    viewDetails.style.color = "#fff";
+    viewDetails.style.fontWeight = "500";
+    viewDetails.style.borderRadius = "10px";
+    viewDetails.style.maxWidth = "90%";
+    viewDetails.style.minWidth = "280px";
+    viewDetails.style.textAlign = "center";
     viewDetails.innerHTML = `
-      <p style="margin-bottom:12px">Event added successfully!<br>Would you like to view the event details and add photos?</p>
-      <div style="display:flex;justify-content:center;gap:12px">
-        <button id="yes-btn" style="padding:8px 16px;background:linear-gradient(135deg,rgb(241, 79, 253),rgb(97, 0, 166));border:none;border-radius:6px;color:white;cursor:pointer;font-weight:600;">YES</button>
-        <button id="no-btn" style="padding:8px 16px;background: linear-gradient(135deg,rgb(76, 0, 229),rgb(37, 2, 48)); border:none;border-radius:6px;color:white;cursor:pointer;font-weight:600;">NO</button>
-      </div>
-    `;
-    viewDetails.style = `
-      padding: 18px 25px;
-      z-index: 1000;
-      position: fixed;
-      top: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      backdrop-filter: blur(10px);
-      background: hsla(271,73%,44%,1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      color: white;
-      font-weight: 500;
-      border-radius: 10px;
-      max-width: 90%;
-      min-width: 280px;
-      text-align: center;
+    <p style="margin-bottom:12px">Event added successfully!<br> Would you like to view the event details and add photos?
+    <div style="display:flex;justify-content:center;gap:12px">
+    <button id="yes-btn" style="padding:8px 16px;background:linear-gradient(135deg,rgb(241, 79, 253),rgb(97, 0, 166));border:none;border-radius:6px;color:white;cursor:pointer;font-weight:600;  box-shadow: 0 4px 10px rgba(241, 79, 253, 0.35), 0 0 10px rgba(97, 0, 166, 0.4);transition: transform 0.2s ease, box-shadow 0.3s ease;">YES</button>
+
+    <button id="no-btn" style="padding:8px 16px;background: linear-gradient(135deg,rgb(76, 0, 229),rgb(37, 2, 48)); border:none;border-radius:6px;color:white;cursor:pointer;font-weight:600;  box-shadow: 0 4px 10px rgba(76, 0, 229, 0.35), 0 0 10px rgba(37, 2, 48, 0.5);transition: transform 0.2s ease, box-shadow 0.3s ease;">NO</button>
+    </div>
+    </p>
     `;
     document.body.appendChild(viewDetails);
-
     document.getElementById("yes-btn").addEventListener("click", () => {
-      window.location.href = `event-details.html?event=${encodeURIComponent(name)}`;
+      window.location.href = `event-details.html?event=${encodeURIComponent(
+        name
+      )}`;
     });
     document.getElementById("no-btn").addEventListener("click", () => {
       document.getElementById("eventForm").reset();
@@ -227,9 +258,7 @@ function getDistance(lat1, lng1, lat2, lng2) {
   const dLng = deg2rad(lng2 - lng1);
   const a =
     Math.sin(dLat / 2) ** 2 +
-    Math.cos(deg2rad(lat1)) *
-      Math.cos(deg2rad(lat2)) *
-      Math.sin(dLng / 2) ** 2;
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLng / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
