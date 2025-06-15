@@ -18,7 +18,13 @@ function renderMarkers(filteredEvents) {
   filteredEvents.forEach(event => {
     L.marker([event.lat, event.lng])
       .addTo(markerGroup)
-      .bindPopup(`<strong>${event.name}</strong><br>Type: ${event.type}`);
+      .bindPopup(`
+  <strong>${event.name}</strong><br>
+  Type: ${event.type}<br>
+  Date: ${event.date || "N/A"}<br>
+  Time: ${event.time || "N/A"}
+`);
+
   });
 }
 
@@ -28,15 +34,18 @@ document.getElementById("eventForm").addEventListener("submit", function (e) {
   e.preventDefault();
   const name = document.getElementById("eventName").value;
   const type = document.getElementById("eventType").value;
+  const date = document.getElementById("eventDate").value;
+  const time = document.getElementById("eventTime").value;
 
   map.once("click", function (event) {
     const { lat, lng } = event.latlng;
-    const newEvent = { name, type, lat, lng };
+    const newEvent = { name, type, date, time, lat, lng };
     events.push(newEvent);
     renderMarkers(events);
     alert("Event added at clicked location!");
     document.getElementById("eventForm").reset();
   });
+
 
   alert("Now click on the map to place your event.");
 });
