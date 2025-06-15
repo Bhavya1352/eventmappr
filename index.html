@@ -20,6 +20,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
@@ -92,8 +94,74 @@
         <p>&copy; 2025 EventMappr | <a href="https://github.com/Bhavya1352/eventmappr" target="_blank">GitHub</a> | <a href="#privacy-policy">Privacy Policy</a> | <a href="#contact">Contact Us</a></p>
     </footer>
 
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Initialize GSAP animations
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Header animation
+    gsap.from(".header-title", {
+      duration: 1,
+      y: -50,
+      opacity: 0,
+      ease: "power3.out"
+    });
+
+    // Controls animation
+    gsap.from(".controls", {
+      duration: 1,
+      y: 30,
+      opacity: 0,
+      delay: 0.3,
+      ease: "power3.out"
+    });
+
+    // Map container animation
+    gsap.from("#map", {
+      duration: 1.2,
+      scale: 0.95,
+      opacity: 0,
+      delay: 0.5,
+      ease: "power3.out"
+    });
+
+    // Footer animation
+    gsap.from("footer", {
+      duration: 1,
+      y: 30,
+      opacity: 0,
+      delay: 0.7,
+      ease: "power3.out"
+    });
+
+    // Button hover animations
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+      button.addEventListener('mouseenter', () => {
+        gsap.to(button, {
+          duration: 0.3,
+          scale: 1.05,
+          boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
+          ease: "power2.out"
+        });
+      });
+      
+      button.addEventListener('mouseleave', () => {
+        gsap.to(button, {
+          duration: 0.3,
+          scale: 1,
+          boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
+          ease: "power2.out"
+        });
+      });
+    });
+  </script>
+
 </body>
 
 </html>

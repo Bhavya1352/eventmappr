@@ -164,7 +164,11 @@ function loadEventDetails() {
 
     // Hide loading and show content
     document.getElementById('loading').style.display = 'none';
-    document.getElementById('eventContent').style.display = 'block';
+
+    // Call animations after content is loaded
+    if (typeof initializeAnimations === 'function') {
+        initializeAnimations();
+    }
 }
 
 // Function to load event photos
