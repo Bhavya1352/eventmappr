@@ -16,10 +16,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
-<header>
+<header class="d-flex justify-content-between align-items-center px-3">
   <div class="header-title">
-      <h1>🗺️ EventMappr</h1>
-    <p class="tagline ">Discover & Share Local Events</p>
+    <h1>🗺️ EventMappr</h1>
+    <p class="tagline">Discover & Share Local Events</p>
+  </div>
+
+  <button id="themeToggle" title="Toggle Dark Mode" class="btn btn-light">
+    🌙
+  </button>
 </header>
 
 
@@ -116,5 +121,6 @@
       });
     });
   </script>
+  <script src="themeToggle.js"></script>
 </body>
 </html>

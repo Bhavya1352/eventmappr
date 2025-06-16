@@ -211,3 +211,62 @@ footer a:hover {
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(76, 0, 229, 0.5), 0 0 12px rgba(37, 2, 48, 0.6);
 }
+
+/* Modo oscuro */
+body.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.dark-mode header {
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+  color: #f0f0f0;
+}
+
+body.dark-mode .controls {
+  background-color: #1e1e2f;
+}
+
+body.dark-mode input,
+body.dark-mode select {
+  background-color: #2a2a3f;
+  color: #f0f0f0;
+  border: 1px solid #444;
+}
+
+body.dark-mode input::placeholder {
+  color: #bbb;
+}
+
+body.dark-mode select option {
+  background-color: #2a2a3f;
+  color: #f0f0f0;
+}
+
+body.dark-mode button {
+  background-color: #3a0ca3;
+  color: #f0f0f0;
+  border: none;
+}
+
+body.dark-mode button:hover {
+  background-color: #7209b7;
+}
+
+body.dark-mode #map {
+  border: 2px solid #2f2f44;
+}
+
+body.dark-mode footer {
+  background-color: #1e1e2f;
+  color: #ccc;
+}
+
+body.dark-mode footer a {
+  color: #a29bfe;
+}
+
+body.dark-mode footer a:hover {
+  color: #d0c9ff;
+}
+
