@@ -10,7 +10,7 @@ This guide will walk you through the contribution process and help you get start
 
 ## 📜 Code of Conduct
 
-Please be respectful and inclusive. By participating, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+Please be respectful and inclusive. By participating, you agree to follow our [Code of Conduct](../docs/CODE_OF_CONDUCT.md).
 
 ---
 
