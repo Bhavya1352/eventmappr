@@ -390,6 +390,7 @@ function setupPhotoModal() {
 function setupActionButtons(event) {
     const shareBtn = document.getElementById('shareBtn');
     const calendarBtn = document.getElementById('calendarBtn');
+    const deleteBtn = document.getElementById('deleteBtn');
 
     // Share button functionality
     shareBtn.addEventListener('click', function (e) {
@@ -402,6 +403,35 @@ function setupActionButtons(event) {
         e.preventDefault();
         addToCalendar(event);
     });
+
+    // Delete button functionality
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            deleteEvent(event);
+        });
+    }
+}
+
+// Add this delete function
+function deleteEvent(event) {
+    if (confirm(`Are you sure you want to permanently delete "${event.name}"?`)) {
+        // Remove from eventsData object
+        delete eventsData[event.name];
+
+        // Remove from localStorage
+        const dynamicEvents = JSON.parse(localStorage.getItem('dynamicEvents') || {});
+        delete dynamicEvents[event.name];
+        localStorage.setItem('dynamicEvents', JSON.stringify(dynamicEvents));
+
+        // Show confirmation
+        showNotification(`"${event.name}" deleted successfully!`, 'success');
+
+        // Redirect back to map view after delay
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1500);
+    }
 }
 
 // Function to share event

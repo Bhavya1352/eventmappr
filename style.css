@@ -16,6 +16,44 @@ h1, h2, h3, h4, h5, h6, .stat-value, .section-title, .feature-card h3, .step-car
 .hero-subtitle, .stat-label, .btn, .btn-outline, .feature-card p, .step-card p {
   font-family: 'Inter', 'Poppins', sans-serif;
 }
+/*for delete button*/
+.btn-danger {
+    background: linear-gradient(135deg, #ff5e5e, #d23333);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 94, 94, 0.3);
+    text-decoration: none;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #e05555, #b82b2b);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 94, 94, 0.4);
+    color: white;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin: 5px;
+}
+
+.action-btn i {
+  font-size: 14px;
+}
 
 /* Improved Navbar Styles */
 .navbar {
