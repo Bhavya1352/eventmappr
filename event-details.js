@@ -389,7 +389,9 @@ function setupPhotoModal() {
 // Function to set up action buttons
 function setupActionButtons(event) {
     const shareBtn = document.getElementById('shareBtn');
-    const calendarBtn = document.getElementById('calendarBtn');
+    const googleCalendarBtn = document.getElementById('googleCalendarBtn');
+    const outlookCalendarBtn = document.getElementById('outlookCalendarBtn');
+    const icsDownloadBtn = document.getElementById('icsDownloadBtn');
 
     // Share button functionality
     shareBtn.addEventListener('click', function (e) {
@@ -397,10 +399,20 @@ function setupActionButtons(event) {
         shareEvent(event);
     });
 
-    // Calendar button functionality
-    calendarBtn.addEventListener('click', function (e) {
+    // Calendar buttons functionality
+    googleCalendarBtn.addEventListener('click', function (e) {
         e.preventDefault();
-        addToCalendar(event);
+        addToGoogleCalendar(event);
+    });
+
+    outlookCalendarBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        addToOutlookCalendar(event);
+    });
+
+    icsDownloadBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        downloadIcsFile(event);
     });
 }
 
@@ -434,32 +446,119 @@ function shareEvent(event) {
     }
 }
 
-// Function to add event to calendar
-function addToCalendar(event) {
-    // Create calendar event data
-    const eventData = {
-        title: event.name,
-        description: event.description,
-        location: event.address,
-        startTime: event.dateTime,
-        endTime: event.dateTime // You can modify this based on your data structure
-    };
+function parseEventDateTime(dateTimeStr) {
+    if (!dateTimeStr || !dateTimeStr.includes('•')) {
+        // Fallback for unknown format
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() + 1); // Tomorrow
+        const endDate = new Date(startDate);
+        endDate.setHours(endDate.getHours() + 1);
+        return { startDate, endDate };
+    }
 
-    // Create calendar URL (Google Calendar format)
-    const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventData.title)}&details=${encodeURIComponent(eventData.description)}&location=${encodeURIComponent(eventData.location)}&dates=${encodeURIComponent(getCalendarDates(eventData.startTime))}`;
+    const parts = dateTimeStr.split('•').map(s => s.trim());
+    let datePart = parts[0];
+    const timePart = parts[1];
 
-    window.open(calendarUrl, '_blank');
-    showNotification('Opening calendar...', 'info');
+    // Handle recurring dates like "Every Sunday"
+    if (datePart.toLowerCase().startsWith('every')) {
+        const dayOfWeek = datePart.split(' ')[1];
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        const targetDay = days.indexOf(dayOfWeek.toLowerCase());
+        if (targetDay !== -1) {
+            const today = new Date();
+            const currentDay = today.getDay();
+            let daysUntilTarget = targetDay - currentDay;
+            if (daysUntilTarget <= 0) {
+                daysUntilTarget += 7;
+            }
+            const nextEventDate = new Date();
+            nextEventDate.setDate(today.getDate() + daysUntilTarget);
+            datePart = nextEventDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        }
+    }
+    
+    if (!timePart || !timePart.includes('-')) {
+        // Fallback for unknown time format
+        const startDate = new Date(datePart);
+        const endDate = new Date(startDate);
+        endDate.setHours(endDate.getHours() + 2); // Default to 2 hours
+        return { startDate, endDate };
+    }
+
+
+    const [startTimeStr, endTimeStr] = timePart.split('-').map(s => s.trim());
+
+    const startDate = new Date(`${datePart} ${startTimeStr}`);
+    const endDate = new Date(`${datePart} ${endTimeStr}`);
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        // Fallback for parsing errors
+        const sDate = new Date();
+        sDate.setDate(sDate.getDate() + 1); // Tomorrow
+        const eDate = new Date(sDate);
+        eDate.setHours(eDate.getHours() + 1);
+        return { startDate: sDate, endDate: eDate };
+    }
+
+    if (endDate < startDate) {
+        endDate.setDate(endDate.getDate() + 1);
+    }
+
+    return { startDate, endDate };
 }
 
-// Helper function to format dates for calendar
-function getCalendarDates(dateTimeStr) {
-    // This is a simple implementation - you might want to enhance this
-    const now = new Date();
-    const startDate = new Date(now.getTime() + 24 * 60 * 60 * 1000); // Tomorrow
-    const endDate = new Date(startDate.getTime() + 2 * 60 * 60 * 1000); // 2 hours later
+function addToGoogleCalendar(event) {
+    const { startDate, endDate } = parseEventDateTime(event.dateTime);
+    
+    const formatForGoogle = (date) => date.toISOString().replace(/-|:|\.\d+/g, '');
 
-    return `${startDate.toISOString().replace(/[-:]/g, '').split('.')[0]}Z/${endDate.toISOString().replace(/[-:]/g, '').split('.')[0]}Z`;
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.name)}&dates=${formatForGoogle(startDate)}/${formatForGoogle(endDate)}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.address)}`;
+    
+    window.open(url, '_blank');
+    showNotification('Opening Google Calendar...', 'info');
+}
+
+function addToOutlookCalendar(event) {
+    const { startDate, endDate } = parseEventDateTime(event.dateTime);
+
+    const formatForOutlook = (date) => date.toISOString();
+
+    const url = `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${encodeURIComponent(event.name)}&startdt=${formatForOutlook(startDate)}&enddt=${formatForOutlook(endDate)}&body=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.address)}`;
+
+    window.open(url, '_blank');
+    showNotification('Opening Outlook Calendar...', 'info');
+}
+
+// Function to download event as .ics file
+function downloadIcsFile(event) {
+    const { startDate, endDate } = parseEventDateTime(event.dateTime);
+
+    const toIcsDate = (date) => date.toISOString().replace(/-|:|\.\d+/g, '');
+
+    const icsContent = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'BEGIN:VEVENT',
+        `UID:${new Date().getTime()}@eventmappr.com`,
+        `DTSTAMP:${toIcsDate(new Date())}`,
+        `DTSTART:${toIcsDate(startDate)}`,
+        `DTEND:${toIcsDate(endDate)}`,
+        `SUMMARY:${event.name}`,
+        `DESCRIPTION:${event.description}`,
+        `LOCATION:${event.address}`,
+        'END:VEVENT',
+        'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${event.name.replace(/ /g, '_')}.ics`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showNotification('Downloading .ics file...', 'success');
 }
 
 // Function to show notifications
@@ -553,4 +652,4 @@ function getEventIcon(type) {
 document.addEventListener('DOMContentLoaded', loadEventDetails);
 
 // Handle browser back/forward buttons
-window.addEventListener('popstate', loadEventDetails); 
+window.addEventListener('popstate', loadEventDetails);
