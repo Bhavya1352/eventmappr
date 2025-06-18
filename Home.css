@@ -196,6 +196,32 @@ section {
     width: auto;
 }
 
+/*Generate Badge styling*/
+.badge-btn {
+    background-color: var(--yellow);
+    color: black;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    opacity: 1;
+    margin-left: 0.5rem;
+    box-shadow: 0 4px 10px rgba(250, 204, 21, 0.3);
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none; /* Removes any underline */
+}
+
+.badge-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(250, 204, 21, 0.4);
+    background-color: #f0c000; /* Matches Add Event button */
+}
+
+.badge-btn::after {
+    display: none; /* Ensures no underline effect */
+}
+
+
 /* Hero Section */
 .hero {
     display: flex;
@@ -231,6 +257,7 @@ section {
     justify-content: center;
     align-items: center;
     max-width: 600px;
+    position: relative;
 }
 
 #preview-map {
@@ -509,6 +536,10 @@ footer {
     .hero-content {
         max-width: 100%;
     }
+
+    .hero-image{
+        width : 100%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -596,4 +627,25 @@ footer {
 .leaflet-popup-content {
     margin: 10px 14px;
     font-family: 'Inter', sans-serif;
+}
+
+.center-button-css{
+    z-index: 1000;
+    height: 42px;
+    width: 42px;
+    padding: 5px;
+    position: absolute;
+    right: 20px;
+    bottom: 35px;
+    border-radius: 10px;
+    background-color: white;
+    border-color: rgb(204, 204, 204);
+    border-style: solid;
+    color: black;
+    cursor: pointer;
+    display: flex;
+}
+
+.gps-icon{
+    width: 30px;
 }

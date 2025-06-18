@@ -40,6 +40,7 @@
         </div>
         <div class="hero-image">
             <div id="preview-map"></div>
+            <button class="center-button-css center-button-js"><img class="gps-icon" src="./assets/gps.png" alt="C"></button>
         </div>
     </section>
 
@@ -323,7 +324,26 @@
             
             marker.bindPopup('<b>New Event</b><br>Click to edit').openPopup();
         });
+
+        document.querySelector('.center-button-js').
+        addEventListener('click', ()=>{
+            if (!navigator.geolocation) {
+                alert("Unable to retrieve your location.");
+                return;
+            }
+            navigator.geolocation
+            .getCurrentPosition((position) => {
+    
+                const userLat = position.coords.latitude||undefined;
+                const userLng = position.coords.longitude||undefined;
+                map.setView([userLat, userLng], 13);
+          },() => {
+            alert("Unable to retrieve your location.");
+            });
+        });
     }
+
+
     </script>
 </body>
 </html>

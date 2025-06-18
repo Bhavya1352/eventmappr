@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EventMappr – Community Events</title>
+
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="Home.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +27,7 @@
   </script>
 </head>
 
+</head>
 <body>
   <nav class="navbar">
     <div class="logo">
@@ -39,37 +41,156 @@
     </div>
     <div class="menu-toggle">
       <i class="fas fa-bars"></i>
+
     </div>
-  </nav>
+  </header>
 
-
-
-
-  <div class="controls">
-    <form id="eventForm">
-      <input class="input" type="text" id="eventName" placeholder="Event name" required />
-      <select class="input" id="eventType" required>
-        <option value="">Type</option>
-        <option value="Music">Music</option>
-        <option value="Volunteering">Volunteering</option>
-        <option value="Technology">Technology</option>
-        <option value="Market">Market</option>
-        <option value="Art">Art</option>
-        <option value="input">Other</option> <!--updated part-->
-      </select>
-      <button type="submit" class="btna btn-primary d-flex align-items-center gap-2">
-        Add Event <span>➕</span>
-      </button>
-
-    </form>
-    </select>
-    <button id="locateBtn" class="btna btn-danger d-flex align-items-center gap-2">
-      Find Nearby <span>📍</span>
+ <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">🗺️ EventMappr</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
     </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto d-flex flex-row flex-wrap">
+        <li class="nav-item mx-2"><a class="nav-link" href="#hero">Home</a></li>
+        <li class="nav-item mx-2"><a class="nav-link" href="#features">Features</a></li>
+        <li class="nav-item mx-2"><a class="nav-link" href="#how-it-works">How It Works</a></li>
+        <li class="nav-item mx-2"><a class="nav-link" href="#map-section">Map</a></li>
+        <li class="nav-item mx-2"><a class="nav-link" href="#faq-section">FAQs</a></li>
+        <li class="nav-item mx-2" id="authLinks">
+          <a class="nav-link" href="auth.html">Sign In</a>
+        </li>
+        <li class="nav-item mx-2 d-none" id="userProfile">
+          <div class="d-flex align-items-center">
+            <span class="nav-link me-2" id="userName"></span>
+            <button class="btn btn-link nav-link p-0" id="logoutBtn">Logout</button>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
-  </div>
+</nav>
 
-  <div id="map"></div>
+
+  <section id="hero" class="hero-section flex-center">
+    <div class="hero-card">
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1 class="hero-title">A new way to discover & share events</h1>
+          <p class="hero-subtitle">EventMappr helps you find, pin, and share local happenings with your community. Start exploring or add your own event now!</p>
+          <div class="hero-btn-group">
+            <a href="#map-section" class="btn btn-primary hero-btn">Start Exploring</a>
+            <a href="#features" class="btn btn-outline hero-btn">Learn More</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><span class="stat-value" data-target="2500">0</span><span class="stat-label">Events</span></div>
+            <div class="hero-stat"><span class="stat-value" data-target="1200">0</span><span class="stat-label">Users</span></div>
+            <div class="hero-stat"><span class="stat-value" data-target="50">0</span><span class="stat-label">Cities</span></div>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-img-grid">
+            <div class="hero-img-box"><img src="./assets/heropage.jpg" alt="Event Crowd"></div>
+            <span class="hero-float-icon icon-star">★</span>
+            <span class="hero-float-icon icon-pin">📍</span>
+            <span class="hero-float-icon icon-share">🔗</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features-section">
+    <div class="container">
+      <h2 class="section-title text-center">Features</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">📌</div>
+            <h3>Pin Events</h3>
+            <p>Add your events to the map for everyone to see</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3>Explore</h3>
+            <p>Discover exciting events happening around you</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">📢</div>
+            <h3>Share</h3>
+            <p>Share the events with your community</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="how-it-works-section">
+    <div class="container">
+      <h2 class="section-title text-center">How It Works</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Add Your Event</h3>
+            <p>Fill in the event details and location</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Pin on Map</h3>
+            <p>Your event appears on the interactive map</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Share & Connect</h3>
+            <p>Let others discover your event</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="map-section">
+    <div class="container">
+      <h2 class="section-title text-center">Explore Events</h2>
+      <div id="authStatus" class="text-center mb-3" style="display: none;">
+        <p class="text-muted">Please sign in to add events</p>
+      </div>
+      <div class="controls">
+        <form id="eventForm" class="d-flex flex-wrap align-items-center gap-2 mb-2">
+          <input class="input" type="text" id="eventName" placeholder="Event name" required />
+          <input type="date" class="input" id="eventDate" required />
+          <input type="time" class="input" id="eventTime" required />
+          <select class="input" id="eventType" required>
+            <option value="">Type</option>
+            <option value="Music">Music</option>
+            <option value="Volunteering">Volunteering</option>
+            <option value="Technology">Technology</option>
+            <option value="Market">Market</option>
+            <option value="Art">Art</option>
+            <option value="Sport">Sport</option>
+            <option value="Other">Other</option>
+          </select>
+          <button type="submit" class="btn btn-primary d-flex align-items-center gap-2">Add Event <span>➕</span></button>
+        </form>
+       
+        <button id="locateBtn" class="btn btn-danger d-flex align-items-center gap-2">Find Nearby <span>📍</span></button>
+        <button id="suggestBtn" class="btn btn-success d-flex align-items-center gap-2">Suggest Events <span>🎯</span></button>
+        <a href="event.html" class="btn btn-outline-secondary">View All Events 📅</a>
+      </div>
+      <div id="map"></div>
+    </div>
+  </section>
+
 
   <footer>
     <p>Built with ❤️ using <a href="https://leafletjs.com/" target="_blank">Leaflet.js</a></p>
@@ -77,9 +198,8 @@
         href="#privacy-policy">Privacy Policy</a> | <a href="#contact">Contact Us</a></p>
   </footer>
   <!-- Floating Feedback Button -->
-  <button id="feedbackBtn" title="Send Feedback">💬</button>
 
-  <!-- Feedback Form Modal -->
+  <button id="feedbackBtn" title="Send Feedback">💬</button>
   <div id="feedbackModal">
     <div class="modal-content">
       <span class="close-btn">&times;</span>
@@ -101,6 +221,7 @@
         <label for="feedbackType" style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">
           Type of Feedback: <span style="color: #e74c3c;">*</span>
         </label>
+
         <select id="feedbackType" name="type" required>
           <option value="">Select feedback type</option>
           <option value="Bug Report">🐛 Bug Report</option>
@@ -154,13 +275,44 @@
           boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
           ease: "power2.out"
         });
+
       });
     });
   </script>
 
+
   <!-- Your Script File -->
   <script src="script.js"></script>
 
-</body>
 
+    // Auth state observer
+    firebase.auth().onAuthStateChanged((user) => {
+      const authLinks = document.getElementById('authLinks');
+      const userProfile = document.getElementById('userProfile');
+      const userName = document.getElementById('userName');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      if (user) {
+        // User is signed in
+        if (authLinks) authLinks.classList.add('d-none');
+        if (userProfile) {
+          userProfile.classList.remove('d-none');
+          if (userName) userName.textContent = user.displayName || user.email;
+        }
+      } else {
+        // User is signed out
+        if (authLinks) authLinks.classList.remove('d-none');
+        if (userProfile) userProfile.classList.add('d-none');
+      }
+    });
+
+    // Logout handler
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        firebase.auth().signOut();
+      });
+    }
+  </script>
+</body>
 </html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventMappr - Badge Generator</title>
+    <link rel="stylesheet" href="Badge.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 10C21 17 12 23 12 23S3 17 3 10C3 5.58172 6.58172 2 12 2C17.4183 2 21 5.58172 21 10Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1>EventMappr</h1>
+                        <p>Badge Generator</p>
+                    </div>
+                </div>
+                <nav class="nav">
+                    <a href="Home.html" class="nav-link" data-nav="home">HOME</a>
+                    <a href="#" class="nav-link" data-nav="about">ABOUT US</a>
+                    <a href="index.html">
+                        <button class="btn-primary">ADD EVENT</button>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="grid">
+                <!-- Form Section -->
+                <div class="form-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+                                    <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+                                    <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+                                    <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+                                    <path
+                                        d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 7.012 17.461 2 12 2z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <h2>Create Your Badge</h2>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <!-- Event Name -->
+                            <div class="form-group">
+                                <label for="eventName">Event Name</label>
+                                <input type="text" id="eventName" placeholder="Enter event name"
+                                    value="Tech Conference 2024">
+                            </div>
+
+                            <!-- Event Date -->
+                            <div class="form-group">
+                                <label for="eventDate">Event Date</label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor"
+                                            stroke-width="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" />
+                                        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" />
+                                        <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" />
+                                    </svg>
+                                    <input type="date" id="eventDate" value="2024-07-15">
+                                </div>
+                            </div>
+
+                            <!-- Event Location -->
+                            <div class="form-group">
+                                <label for="eventLocation">Event Location</label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M21 10C21 17 12 23 12 23S3 17 3 10C3 5.58172 6.58172 2 12 2C17.4183 2 21 5.58172 21 10Z"
+                                            stroke="currentColor" stroke-width="2" />
+                                        <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" />
+                                    </svg>
+                                    <input type="text" id="eventLocation" placeholder="Enter location"
+                                        value="San Francisco, CA">
+                                </div>
+                            </div>
+
+                            <!-- Style Selector -->
+                            <div class="form-group">
+                                <label for="badgeStyle">Badge Style</label>
+                                <select id="badgeStyle">
+                                    <option value="professional">Professional</option>
+                                    <option value="creative">Creative</option>
+                                    <option value="minimal">Minimal</option>
+                                    <option value="tech">Tech</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="form-actions">
+                            <button id="previewBtn" class="btn-secondary">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 12S5 4 12 4s11 8 11 8-4 8-11 8S1 12 1 12z" stroke="currentColor"
+                                        stroke-width="2" />
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                                </svg>
+                                Live Preview
+                            </button>
+                            <button id="downloadBtn" class="btn-primary">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                Download Badge
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Badge Preview Section -->
+                <div class="preview-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 12S5 4 12 4s11 8 11 8-4 8-11 8S1 12 1 12z" stroke="currentColor"
+                                        stroke-width="2" />
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                                </svg>
+                                <h2>Live Preview</h2>
+                            </div>
+                        </div>
+
+                        <div class="preview-container">
+                            <div id="badgePreview" class="badge professional-theme">
+                                <div class="badge-header">
+                                    <div class="badge-logo">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M21 10C21 17 12 23 12 23S3 17 3 10C3 5.58172 6.58172 2 12 2C17.4183 2 21 5.58172 21 10Z"
+                                                stroke="currentColor" stroke-width="2" />
+                                            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" />
+                                        </svg>
+                                    </div>
+                                    <div class="badge-brand">EventMappr</div>
+                                </div>
+
+                                <div class="badge-content">
+                                    <h3 class="badge-title">Tech Conference 2024</h3>
+
+                                    <div class="badge-details">
+                                        <div class="badge-detail">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"
+                                                    stroke="currentColor" stroke-width="2" />
+                                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor"
+                                                    stroke-width="2" />
+                                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor"
+                                                    stroke-width="2" />
+                                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor"
+                                                    stroke-width="2" />
+                                            </svg>
+                                            <span class="badge-date">July 15, 2024</span>
+                                        </div>
+
+                                        <div class="badge-detail">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M21 10C21 17 12 23 12 23S3 17 3 10C3 5.58172 6.58172 2 12 2C17.4183 2 21 5.58172 21 10Z"
+                                                    stroke="currentColor" stroke-width="2" />
+                                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" />
+                                            </svg>
+                                            <span class="badge-location">San Francisco, CA</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="badge-footer">
+                                    <div class="badge-qr">
+                                        <div class="qr-placeholder">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="3" y="3" width="8" height="8" rx="1" stroke="currentColor"
+                                                    stroke-width="2" />
+                                                <rect x="13" y="3" width="8" height="8" rx="1" stroke="currentColor"
+                                                    stroke-width="2" />
+                                                <rect x="3" y="13" width="8" height="8" rx="1" stroke="currentColor"
+                                                    stroke-width="2" />
+                                                <rect x="13" y="13" width="8" height="8" rx="1" stroke="currentColor"
+                                                    stroke-width="2" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="Badge.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+
+</html>
