@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us – EventMappr</title>
+    <link rel="stylesheet" href="AboutUs.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="about-navbar">
+        <div class="about-logo">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>EventMappr</span>
+        </div>
+        <div class="about-nav-links">
+            <a href="Home.html">Home</a>
+            <a href="AboutUs.html" class="about-active">About Us</a>
+            <a href="index.html" class="add-event-btn">Add Event</a>
+        </div>
+        <div class="about-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <h1>Our Story</h1>
+            <p class="about-tagline">Connecting Communities Through Events</p>
+            <p class="about-description">Learn about the team behind EventMappr and our mission to bring local
+                communities together</p>
+        </div>
+        <div class="about-hero-image">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                alt="Team collaboration" class="about-team-image">
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="about-mission" id="mission">
+        <h2>Our Mission</h2>
+        <div class="about-mission-content">
+            <div class="about-mission-text">
+                <p>At EventMappr, we believe that vibrant communities are built through meaningful local connections.
+                    Our mission is to make discovering and sharing local events as intuitive and accessible as possible.
+                </p>
+                <p>We created EventMappr to solve a simple problem: finding what's happening around you shouldn't be
+                    complicated. By visualizing events on an interactive map, we've made it easier than ever to see
+                    what's happening in your neighborhood.</p>
+            </div>
+            <div class="about-mission-values">
+                <div class="about-value-card">
+                    <div class="about-value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community First</h3>
+                    <p>We prioritize building tools that strengthen local connections and empower community organizers.
+                    </p>
+                </div>
+                <div class="about-value-card">
+                    <div class="about-value-icon">
+                        <i class="fas fa-universal-access"></i>
+                    </div>
+                    <h3>Accessibility</h3>
+                    <p>We're committed to making our platform accessible to everyone, regardless of technical ability.
+                    </p>
+                </div>
+                <div class="about-value-card">
+                    <div class="about-value-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Trust & Safety</h3>
+                    <p>We maintain high standards for event listings and protect user privacy and data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Contact Section -->
+    <section class="about-contact">
+        <h2>Get In Touch</h2>
+        <div class="about-contact-container">
+            <div class="about-contact-info">
+                <div class="about-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>hello@eventmappr.com</p>
+                </div>
+                <div class="about-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>123 Community Ave, San Francisco, CA 94107</p>
+                </div>
+                <div class="about-contact-item">
+                    <i class="fas fa-phone"></i>
+                    <p>(555) 123-4567</p>
+                </div>
+                <div class="about-social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="about-contact-form">
+                <form>
+                    <div class="about-form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="about-form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="about-form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="about-submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="about-footer">
+        <div class="about-footer-content">
+            <div class="about-footer-logo">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>EventMappr</span>
+            </div>
+            <div class="about-footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="about-social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="about-copyright">
+            <p>&copy; 2025 EventMappr. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.querySelector('.about-menu-toggle');
+            const navLinks = document.querySelector('.about-nav-links');
+
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function () {
+                    navLinks.classList.toggle('about-show');
+                });
+            }
+
+            // Animate elements on scroll
+            const animateOnScroll = function () {
+                const elements = document.querySelectorAll('.about-value-card, .about-team-member, .about-timeline-item');
+
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('about-animate');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on page load
+
+            // Navbar scroll effect
+            const navbar = document.querySelector('.about-navbar');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 50) {
+                    navbar.classList.add('about-scrolled');
+                } else {
+                    navbar.classList.remove('about-scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

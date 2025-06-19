@@ -7,31 +7,41 @@
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="Home.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="Home.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 
-  <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
-  <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="auth.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="config.js"></script>
+  <script>
+    (function () {
+      emailjs.init(window.CONFIG.EMAILJS_PUBLIC_KEY); // Replace with your actual EmailJS public key
+    })();
+  </script>
+</head>
 
 </head>
 <body>
-  <header>
-    <div class="header-title">
-      <h1>🗺️ EventMappr</h1>
-      <p class="tagline">Discover & Share Local Events</p>
-      <button id="themeToggleBtn" title="Toggle Dark Mode" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">
-        🌙
-      </button>
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>EventMappr</span>
+    </div>
+    <div class="nav-links">
+      <a href="#" class="active">Home</a>
+      <a href="AboutUs.html">About Us</a>
+      <a href="index.html" class="add-event-btn">Add Event</a>
+    </div>
+    <div class="menu-toggle">
+      <i class="fas fa-bars"></i>
+
     </div>
   </header>
 
@@ -148,19 +158,70 @@
     </div>
   </section>
 
+  <section id="map-section">
+    <div class="container">
+      <h2 class="section-title text-center">Explore Events</h2>
+      <div id="authStatus" class="text-center mb-3" style="display: none;">
+        <p class="text-muted">Please sign in to add events</p>
+      </div>
+      <div class="controls">
+        <form id="eventForm" class="d-flex flex-wrap align-items-center gap-2 mb-2">
+          <input class="input" type="text" id="eventName" placeholder="Event name" required />
+          <input type="date" class="input" id="eventDate" required />
+          <input type="time" class="input" id="eventTime" required />
+          <select class="input" id="eventType" required>
+            <option value="">Type</option>
+            <option value="Music">Music</option>
+            <option value="Volunteering">Volunteering</option>
+            <option value="Technology">Technology</option>
+            <option value="Market">Market</option>
+            <option value="Art">Art</option>
+            <option value="Sport">Sport</option>
+            <option value="Other">Other</option>
+          </select>
+          <button type="submit" class="btn btn-primary d-flex align-items-center gap-2">Add Event <span>➕</span></button>
+        </form>
+       
+        <button id="locateBtn" class="btn btn-danger d-flex align-items-center gap-2">Find Nearby <span>📍</span></button>
+        <button id="suggestBtn" class="btn btn-success d-flex align-items-center gap-2">Suggest Events <span>🎯</span></button>
+        <a href="event.html" class="btn btn-outline-secondary">View All Events 📅</a>
+      </div>
+      <div id="map"></div>
+    </div>
+  </section>
+
+
+  <footer>
+    <p>Built with ❤️ using <a href="https://leafletjs.com/" target="_blank">Leaflet.js</a></p>
+    <p>&copy; 2025 EventMappr | <a href="https://github.com/Bhavya1352/eventmappr" target="_blank">GitHub</a> | <a
+        href="#privacy-policy">Privacy Policy</a> | <a href="#contact">Contact Us</a></p>
+  </footer>
+  <!-- Floating Feedback Button -->
+
+
   <button id="feedbackBtn" title="Send Feedback">💬</button>
   <div id="feedbackModal">
     <div class="modal-content">
       <span class="close-btn">&times;</span>
       <h2 style="color: #667eea; margin-bottom: 20px;">📝 Send Feedback</h2>
       <form id="feedbackForm">
-        <label for="feedbackName">Name: <span style="color: #e74c3c;">*</span></label>
-        <input type="text" id="feedbackName" name="name" required />
+        <!-- Name Field -->
+        <label for="feedbackName" style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">
+          Name: <span style="color: #e74c3c;">*</span>
+        </label>
+        <input type="text" id="feedbackName" name="name" placeholder="Enter your full name" required />
 
-        <label for="feedbackEmail">Email: <span style="color: #e74c3c;">*</span></label>
-        <input type="email" id="feedbackEmail" name="email" required />
+        <!-- Email Field -->
+        <label for="feedbackEmail" style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">
+          Email: <span style="color: #e74c3c;">*</span>
+        </label>
+        <input type="email" id="feedbackEmail" name="email" placeholder="Enter your email address" required />
 
-        <label for="feedbackType">Type of Feedback: <span style="color: #e74c3c;">*</span></label>
+        <!-- Feedback Type Dropdown -->
+        <label for="feedbackType" style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">
+          Type of Feedback: <span style="color: #e74c3c;">*</span>
+        </label>
+
         <select id="feedbackType" name="type" required>
           <option value="">Select feedback type</option>
           <option value="Bug Report">🐛 Bug Report</option>
@@ -172,199 +233,57 @@
           <option value="Other">📝 Other</option>
         </select>
 
-        <label for="feedbackText">Your Feedback: <span style="color: #e74c3c;">*</span></label>
-        <textarea id="feedbackText" name="message" rows="5" required></textarea>
+        <!-- Feedback Text Area -->
+        <label for="feedbackText" style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">
+          Your Feedback: <span style="color: #e74c3c;">*</span>
+        </label>
+        <textarea id="feedbackText" name="message" rows="5" placeholder="Tell us what you think about EventMappr..."
+          required></textarea>
 
+        <!-- Hidden Field for Time -->
         <input type="hidden" name="time" id="feedbackTime" />
-        <button type="submit" class="submit-btn">Submit Feedback</button>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">
+          Submit Feedback
+        </button>
       </form>
+
     </div>
   </div>
-<div class="faqsdiv">
-   <link rel="stylesheet" href="faq.css" />
-   <section class="faq-section" id="faq-section">
-    <h2 class="section-title text-center">Frequently Asked Questions</h2>
-    
-    <div class="faq-item">
-      <div class="faq-question">What is EventMappr?</div>
-      <div class="faq-answer">
-        EventMappr is a lightweight, open-source web app that lets you discover, add, and explore local community events pinned on an interactive map.
-      </div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question">Is EventMappr free to use?</div>
-      <div class="faq-answer">
-        It's completely free and open-source under the MIT license.
-      </div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question">How do I add a new event?</div>
-      <div class="faq-answer">
-        Click anywhere on the map to drop a pin, then fill in the event details like title, category, date/time, and organizer.
-      </div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question">Does EventMappr store my events permanently?</div>
-      <div class="faq-answer">
-        EventMappr uses localStorage, so events stay saved in your browser unless you clear your data.
-      </div>
-    </div> 
-    <div class="faq-item">
-      <div class="faq-question">Can I filter events by category?</div>
-      <div class="faq-answer">
-        You can filter by Music, Tech, Volunteering, Market, and Art.
-      </div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question">Is there a mobile version?</div>
-      <div class="faq-answer">
-        Yes, the UI is fully responsive and optimized for mobile and desktop.
-      </div>
-    </div>
-     </div>
-   </section>
-</div>
-  <footer>
-    <div class="footer-content">
-      <div class="footer-logo">
-        <i class="fas fa-map-marker-alt"></i>
-        <span>EventMappr</span>
-      </div>
-      <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Contact</a>
-      </div>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-      </div>
-    </div>
-    <div class="copyright">
-      <p>&copy; 2025 EventMappr. All rights reserved.</p>
-    </div>
-    <p>Built with ❤️ using <a href="https://leafletjs.com/" target="_blank">Leaflet.js</a></p>
-    <p>&copy; 2025 EventMappr | <a href="https://github.com/Bhavya1352/eventmappr" target="_blank">GitHub</a> | <a href="#privacy-policy">Privacy Policy</a> | <a href="#contact">Contact Us</a></p>
-  </footer>
-  <script src="https://cdn.botpress.cloud/webchat/v3.0/inject.js" defer></script>
-<script src="https://files.bpcontent.cloud/2025/06/17/10/20250617102015-6A94C26W.js" defer></script>
-    
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="script.js"></script>
+
+  <!-- GSAP Hover Animation -->
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
-      gsap.from('.navbar', { opacity: 0, y: -40, duration: 1, ease: 'power3.out' });
-      gsap.from('.hero-title', { opacity: 0, y: 40, duration: 1, ease: 'power3.out' });
-      gsap.from('.hero-subtitle', { opacity: 0, y: 40, duration: 1, delay: 0.2, ease: 'power3.out' });
-      gsap.from('.hero-btn-group', { opacity: 0, y: 30, duration: 0.8, delay: 0.5, ease: 'power3.out' });
-      gsap.from('.hero-stats .hero-stat', {
-        opacity: 0,
-        y: 30,
-        duration: 0.7,
-        stagger: 0.15,
-        delay: 0.7,
-        ease: 'power3.out'
-      });
-      gsap.from('.hero-img-box', { opacity: 0, scale: 0.85, duration: 1, delay: 0.7, ease: 'power3.out' });
-
-      gsap.utils.toArray('.hero-float-icon').forEach((icon, i) => {
-        gsap.to(icon, {
-          y: 18,
-          repeat: -1,
-          yoyo: true,
-          duration: 2 + i,
-          ease: 'sine.inOut',
-          delay: i * 0.3
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+      button.addEventListener('mouseenter', () => {
+        gsap.to(button, {
+          duration: 0.3,
+          scale: 1.05,
+          boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
+          ease: "power2.out"
         });
       });
 
-      gsap.utils.toArray('.feature-card').forEach((card, i) => {
-        gsap.from(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse'
-          },
-          opacity: 0,
-          y: 40,
-          duration: 0.8,
-          delay: i * 0.15,
-          ease: 'power3.out'
+      button.addEventListener('mouseleave', () => {
+        gsap.to(button, {
+          duration: 0.3,
+          scale: 1,
+          boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
+          ease: "power2.out"
         });
-      });
 
-      gsap.utils.toArray('.step-card').forEach((card, i) => {
-        gsap.from(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse'
-          },
-          opacity: 0,
-          y: 40,
-          duration: 0.8,
-          delay: i * 0.15,
-          ease: 'power3.out'
-        });
-      });
-
-      const statCounters = document.querySelectorAll('.stat-value');
-      statCounters.forEach(counter => {
-        const target = +counter.getAttribute('data-target');
-        const duration = 1.5;
-
-        ScrollTrigger.create({
-          trigger: counter,
-          start: 'top 90%',
-          once: true,
-          onEnter: () => {
-            gsap.fromTo(counter,
-              { innerText: 0 },
-              {
-                innerText: target,
-                duration: duration,
-                ease: 'power1.out',
-                snap: { innerText: 1 },
-                onUpdate: function () {
-                  counter.innerText = Math.floor(counter.innerText).toLocaleString();
-                },
-                onComplete: function () {
-                  counter.innerText = target.toLocaleString() + '+';
-                }
-              });
-          }
-        });
-      });
-    });
-    document.querySelectorAll('.faq-question').forEach(question => {
-      question.addEventListener('click', () => {
-        const item = question.parentElement;
-        document.querySelectorAll('.faq-item').forEach(i => {
-          if (i !== item) i.classList.remove('active');
-        });
-        item.classList.toggle('active');
       });
     });
   </script>
 
-  <!-- Firebase SDK -->
-  <script>
-    // Initialize Firebase
-    firebase.initializeApp({
-      apiKey: "AIzaSyDOhPO50_bSDoNJ1lKOV7NRN672dq_1Ldg",
-      authDomain: "eventmappr23.firebaseapp.com",
-      projectId: "eventmappr23",
-      storageBucket: "eventmappr23.firebasestorage.app",
-      messagingSenderId: "767568582880",
-      appId: "1:767568582880:web:c5438cf3a3d371a47d1885",
-      measurementId: "G-VG4E8PJ29S"
-    });
+
+  <!-- Your Script File -->
+  <script src="script.js"></script>
+
 
     // Auth state observer
     firebase.auth().onAuthStateChanged((user) => {
