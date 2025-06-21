@@ -16,7 +16,6 @@
 - 🗺️ **NEW: Mini maps** - Each event page includes a map showing the exact location
 - ☁️ **NEW: Weather Planner** - Users can check 5-day weather forecasts for any city to help plan suitable dates for events
 - 📸 **NEW: Event Gallery** - A dedicated page displaying user-shared images from past events, fostering community engagement
-- 💡 **NEW: Suggest an Event** – Share your ideas to shape upcoming community experiences right from your browser!
 
 ---
 

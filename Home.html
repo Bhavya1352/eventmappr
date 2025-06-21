@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,12 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
-
 <body>
     <!-- Nav Bar -->
     <nav class="navbar">
@@ -148,87 +144,6 @@
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Use</a>
                 <a href="#">Contact</a>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        // Navbar scroll effect
-                        const navbar = document.querySelector('.navbar');
-                        let lastScrollTop = 0;
-
-                        window.addEventListener('scroll', function () {
-                            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-                            if (scrollTop > 50) {
-                                navbar.classList.add('scrolled');
-                            } else {
-                                navbar.classList.remove('scrolled');
-                            }
-
-                            const sections = document.querySelectorAll('section[id]');
-                            sections.forEach(section => {
-                                const sectionTop = section.offsetTop - 100;
-                                const sectionHeight = section.offsetHeight;
-                                if (scrollTop >= sectionTop && scrollTop < sectionTop + sectionHeight) {
-                                    const currentId = section.getAttribute('id');
-                                    document.querySelectorAll('.nav-links a').forEach(link => {
-                                        link.classList.remove('active');
-                                        if (link.getAttribute('href') === '#' + currentId) {
-                                            link.classList.add('active');
-                                        }
-                                    });
-                                }
-                            });
-
-                            lastScrollTop = scrollTop;
-                        });
-
-                        // Initialize Leaflet map
-                        initMap();
-                    });
-
-                    function initMap() {
-                        const map = L.map('preview-map').setView([40.7128, -74.0060], 13);
-
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        }).addTo(map);
-
-                        const events = [
-                            { lat: 40.7128, lng: -74.0060, title: "Tech Meetup", category: "tech" },
-                            { lat: 40.7200, lng: -73.9950, title: "Jazz Concert", category: "music" },
-                            { lat: 40.7080, lng: -74.0100, title: "Community Cleanup", category: "volunteer" },
-                            { lat: 40.7150, lng: -74.0200, title: "Farmers Market", category: "market" },
-                            { lat: 40.7220, lng: -74.0000, title: "Art Exhibition", category: "art" }
-                        ];
-
-                        const icons = {
-                            tech: L.divIcon({ html: '<i class="fas fa-laptop-code" style="color: #38BDF8;"></i>', className: 'event-marker tech-marker', iconSize: [30, 30] }),
-                            music: L.divIcon({ html: '<i class="fas fa-music" style="color: #FF6B6B;"></i>', className: 'event-marker music-marker', iconSize: [30, 30] }),
-                            volunteer: L.divIcon({ html: '<i class="fas fa-hands-helping" style="color: #4CAF50;"></i>', className: 'event-marker volunteer-marker', iconSize: [30, 30] }),
-                            market: L.divIcon({ html: '<i class="fas fa-store" style="color: #FACC15;"></i>', className: 'event-marker market-marker', iconSize: [30, 30] }),
-                            art: L.divIcon({ html: '<i class="fas fa-palette" style="color: #9C27B0;"></i>', className: 'event-marker art-marker', iconSize: [30, 30] })
-                        };
-
-                        events.forEach(event => {
-                            const marker = L.marker([event.lat, event.lng], {
-                                icon: icons[event.category]
-                            }).addTo(map);
-
-                            marker.bindPopup(`<b>${event.title}</b>`);
-                        });
-
-                        map.on('click', function (e) {
-                            const lat = e.latlng.lat;
-                            const lng = e.latlng.lng;
-                            console.log(`New event at: ${lat}, ${lng}`);
-
-                            const marker = L.marker([lat, lng], {
-                                icon: icons.tech
-                            }).addTo(map);
-
-                            marker.bindPopup('<b>New Event</b><br>Click to edit').openPopup();
-                        });
-                    }
-                </script>
             </div>
             <div class="social-links">
                 <a href="#"><i class="fab fa-github"></i></a>
@@ -242,87 +157,86 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Navbar scroll effect
-            const navbar = document.querySelector('.navbar');
-            let lastScrollTop = 0;
+document.addEventListener('DOMContentLoaded', function () {
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    let lastScrollTop = 0;
 
-            window.addEventListener('scroll', function () {
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    window.addEventListener('scroll', function () {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-                if (scrollTop > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
+        if (scrollTop > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
 
-                const sections = document.querySelectorAll('section[id]');
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    const sectionHeight = section.offsetHeight;
-                    if (scrollTop >= sectionTop && scrollTop < sectionTop + sectionHeight) {
-                        const currentId = section.getAttribute('id');
-                        document.querySelectorAll('.nav-links a').forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === '#' + currentId) {
-                                link.classList.add('active');
-                            }
-                        });
+        const sections = document.querySelectorAll('section[id]');
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.offsetHeight;
+            if (scrollTop >= sectionTop && scrollTop < sectionTop + sectionHeight) {
+                const currentId = section.getAttribute('id');
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + currentId) {
+                        link.classList.add('active');
                     }
                 });
-
-                lastScrollTop = scrollTop;
-            });
-
-            // Initialize Leaflet map
-            initMap();
+            }
         });
 
-        function initMap() {
-            const map = L.map('preview-map').setView([40.7128, -74.0060], 13);
+        lastScrollTop = scrollTop;
+    });
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
+    // Initialize Leaflet map
+    initMap();
+});
 
-            const events = [
-                { lat: 40.7128, lng: -74.0060, title: "Tech Meetup", category: "tech" },
-                { lat: 40.7200, lng: -73.9950, title: "Jazz Concert", category: "music" },
-                { lat: 40.7080, lng: -74.0100, title: "Community Cleanup", category: "volunteer" },
-                { lat: 40.7150, lng: -74.0200, title: "Farmers Market", category: "market" },
-                { lat: 40.7220, lng: -74.0000, title: "Art Exhibition", category: "art" }
-            ];
+function initMap() {
+    const map = L.map('preview-map').setView([40.7128, -74.0060], 13);
 
-            const icons = {
-                tech: L.divIcon({ html: '<i class="fas fa-laptop-code" style="color: #38BDF8;"></i>', className: 'event-marker tech-marker', iconSize: [30, 30] }),
-                music: L.divIcon({ html: '<i class="fas fa-music" style="color: #FF6B6B;"></i>', className: 'event-marker music-marker', iconSize: [30, 30] }),
-                volunteer: L.divIcon({ html: '<i class="fas fa-hands-helping" style="color: #4CAF50;"></i>', className: 'event-marker volunteer-marker', iconSize: [30, 30] }),
-                market: L.divIcon({ html: '<i class="fas fa-store" style="color: #FACC15;"></i>', className: 'event-marker market-marker', iconSize: [30, 30] }),
-                art: L.divIcon({ html: '<i class="fas fa-palette" style="color: #9C27B0;"></i>', className: 'event-marker art-marker', iconSize: [30, 30] })
-            };
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-            events.forEach(event => {
-                const marker = L.marker([event.lat, event.lng], {
-                    icon: icons[event.category]
-                }).addTo(map);
+    const events = [
+        { lat: 40.7128, lng: -74.0060, title: "Tech Meetup", category: "tech" },
+        { lat: 40.7200, lng: -73.9950, title: "Jazz Concert", category: "music" },
+        { lat: 40.7080, lng: -74.0100, title: "Community Cleanup", category: "volunteer" },
+        { lat: 40.7150, lng: -74.0200, title: "Farmers Market", category: "market" },
+        { lat: 40.7220, lng: -74.0000, title: "Art Exhibition", category: "art" }
+    ];
 
-                marker.bindPopup(`<b>${event.title}</b>`);
-            });
+    const icons = {
+        tech: L.divIcon({ html: '<i class="fas fa-laptop-code" style="color: #38BDF8;"></i>', className: 'event-marker tech-marker', iconSize: [30, 30] }),
+        music: L.divIcon({ html: '<i class="fas fa-music" style="color: #FF6B6B;"></i>', className: 'event-marker music-marker', iconSize: [30, 30] }),
+        volunteer: L.divIcon({ html: '<i class="fas fa-hands-helping" style="color: #4CAF50;"></i>', className: 'event-marker volunteer-marker', iconSize: [30, 30] }),
+        market: L.divIcon({ html: '<i class="fas fa-store" style="color: #FACC15;"></i>', className: 'event-marker market-marker', iconSize: [30, 30] }),
+        art: L.divIcon({ html: '<i class="fas fa-palette" style="color: #9C27B0;"></i>', className: 'event-marker art-marker', iconSize: [30, 30] })
+    };
 
-            map.on('click', function (e) {
-                const lat = e.latlng.lat;
-                const lng = e.latlng.lng;
-                console.log(`New event at: ${lat}, ${lng}`);
+    events.forEach(event => {
+        const marker = L.marker([event.lat, event.lng], {
+            icon: icons[event.category]
+        }).addTo(map);
 
-                const marker = L.marker([lat, lng], {
-                    icon: icons.tech
-                }).addTo(map);
+        marker.bindPopup(`<b>${event.title}</b>`);
+    });
 
-                marker.bindPopup('<b>New Event</b><br>Click to edit').openPopup();
-            });
-        }
-    </script>
+    map.on('click', function (e) {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+        console.log(`New event at: ${lat}, ${lng}`);
+
+        const marker = L.marker([lat, lng], {
+            icon: icons.tech
+        }).addTo(map);
+
+        marker.bindPopup('<b>New Event</b><br>Click to edit').openPopup();
+    });
+}
+</script>
 
 </body>
-
 </html>
