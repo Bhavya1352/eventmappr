@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggest an Event - EventMappr</title>
+    <link rel="stylesheet" href="suggestions.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Nav Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>EventMappr</span>
+        </div>
+        <div class="nav-links">
+            <a href="Home.html">Home</a>
+            <a href="#">About Us</a>
+            <a href="gallery.html" class="nav-link gallery-link">Gallery</a>
+            <a href="Weather.html" class="nav-link weather-link">
+                <i class="fas fa-calendar-alt"></i> Weather Planner
+            </a>
+            <a href="Badge.html" class="badge-btn">Generate Badge</a>
+            <a href="index.html" class="add-event-btn">Add Event</a>
+        </div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="suggestions-main">
+        <!-- Header Section -->
+        <section class="suggestions-header">
+            <div class="container">
+                <h1><i class="fas fa-lightbulb"></i> Suggest an Event</h1>
+                <p>Have an amazing event idea? Share it with the community and help make your city more vibrant!</p>
+            </div>
+        </section>
+
+        <!-- Suggestion Form -->
+        <section class="suggestion-form-section">
+            <div class="container">
+                <div class="form-container">
+                    <h2>Share Your Event Idea</h2>
+                    <form id="suggestionForm" class="suggestion-form">
+                        <div class="form-group">
+                            <label for="eventCategory">
+                                <i class="fas fa-tags"></i>
+                                Event Category
+                            </label>
+                            <select id="eventCategory" name="eventCategory" required>
+                                <option value="">Select a category...</option>
+                                <option value="Music">🎵 Music</option>
+                                <option value="Tech">💻 Tech</option>
+                                <option value="Art">🎨 Art</option>
+                                <option value="Volunteering">🤝 Volunteering</option>
+                                <option value="Market">🏪 Market</option>
+                                <option value="Sports">⚽ Sports</option>
+                                <option value="Food">🍕 Food & Dining</option>
+                                <option value="Education">📚 Education</option>
+                                <option value="Community">🏘️ Community</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="eventDescription">
+                                <i class="fas fa-edit"></i>
+                                Event Description
+                            </label>
+                            <textarea 
+                                id="eventDescription" 
+                                name="eventDescription" 
+                                placeholder="Describe your event idea in detail. What makes it special? Who is it for? Why would the community love it?"
+                                rows="6"
+                                maxlength="500"
+                                required
+                            ></textarea>
+                            <div class="char-counter">
+                                <span id="charCount">0</span>/500 characters
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit Suggestion
+                        </button>
+                    </form>
+
+                    <!-- Success Message -->
+                    <div class="success-message" id="successMessage">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Thank you for your suggestion!</h3>
+                        <p>Your event idea has been saved and will be reviewed by our community team.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Suggestions List -->
+        <section class="suggestions-list-section">
+            <div class="container">
+                <h2>Recent Community Suggestions</h2>
+                
+                <!-- Filter Buttons -->
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="all">
+                        <i class="fas fa-list"></i> All
+                    </button>
+                    <button class="filter-btn" data-category="Music">
+                        <i class="fas fa-music"></i> Music
+                    </button>
+                    <button class="filter-btn" data-category="Tech">
+                        <i class="fas fa-laptop-code"></i> Tech
+                    </button>
+                    <button class="filter-btn" data-category="Art">
+                        <i class="fas fa-palette"></i> Art
+                    </button>
+                    <button class="filter-btn" data-category="Volunteering">
+                        <i class="fas fa-hands-helping"></i> Volunteering
+                    </button>
+                    <button class="filter-btn" data-category="Market">
+                        <i class="fas fa-store"></i> Market
+                    </button>
+                    <button class="filter-btn" data-category="Sports">
+                        <i class="fas fa-futbol"></i> Sports
+                    </button>
+                </div>
+
+                <!-- Suggestions List -->
+                <div class="suggestions-grid" id="suggestionsList">
+                    <!-- Suggestions will be dynamically added here -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>No suggestions yet!</h3>
+                    <p>Be the first to suggest an amazing event for your community.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="delete-modal" id="deleteModal">
+        <div class="delete-modal-content">
+            <h3>Delete Suggestion</h3>
+            <p>Are you sure you want to delete this event suggestion? This action cannot be undone.</p>
+            <div class="delete-modal-buttons">
+                <button class="confirm-delete-btn" id="confirmDeleteBtn">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <button class="cancel-delete-btn" id="cancelDeleteBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>EventMappr</span>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Contact</a>
+                <a href="Community-forum.html">Community Forum</a>
+                <a href="gallery.html">
+                    <i class="fas fa-camera" style="margin-right: 6px; color: #38BDF8;"></i> Gallery
+                </a>
+                <a href="Weather.html">
+                    <i class="fas fa-calendar-alt" style="margin-right: 6px; color: #FACC15;"></i> Weather Planner
+                </a>
+                <a href="suggestions.html" class="suggest-link active">
+                    <i class="fas fa-lightbulb" style="margin-right: 6px; color: #FACC15;"></i> Suggest an Event
+                </a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 EventMappr. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="suggestions.js"></script>
+</body>
+</html>
