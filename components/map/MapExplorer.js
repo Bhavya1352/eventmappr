@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { EVENT_CATEGORIES } from '../../utils/routes';
+import GpsButton from '../ui/GpsButton'
 
 const MapExplorer = ({ events = [], onEventAdded, onEventDeleted, isAuthenticated }) => {
   const [newEvent, setNewEvent] = useState({
@@ -328,6 +329,9 @@ const MapExplorer = ({ events = [], onEventAdded, onEventDeleted, isAuthenticate
               </Popup>
             </Marker>
           ))}
+          
+          <GpsButton/>
+
         </MapContainer>
       </div>
       

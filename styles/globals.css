@@ -567,3 +567,38 @@ label {
     transform: translateY(0px);
   }
 } 
+
+        .gps-button-div{
+            position: absolute;
+            right: 20px;
+            bottom: 35px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gps-button{
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            background-color: white;
+            border-color: rgb(204, 204, 204);
+            border-style: solid;
+            color: black;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .gps-button:hover {
+          transform: scale(1.1);
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .gps-icon{
+            width: 80%;
+        }
