@@ -361,7 +361,11 @@ function setupPhotoModal() {
     const modalPrev = document.getElementById('modalPrev');
     const modalNext = document.getElementById('modalNext');
 
-    modalClose.addEventListener('click', closePhotoModal);
+    modalClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closePhotoModal();
+    });
+    
     modalPrev.addEventListener('click', () => navigatePhoto('prev'));
     modalNext.addEventListener('click', () => navigatePhoto('next'));
 

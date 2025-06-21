@@ -304,30 +304,15 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-      }
-
-      .btn-primary {
         background: linear-gradient(135deg, #667eea, #764ba2);
         color: white;
         border: none;
       }
 
-      .btn-primary:hover {
+      .action-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         color: white;
-      }
-
-      .btn-outline {
-        background: transparent;
-        color: #667eea;
-        border: 2px solid #667eea;
-      }
-
-      .btn-outline:hover {
-        background: #667eea;
-        color: white;
-        transform: translateY(-2px);
       }
 
       .event-meta {
@@ -1082,14 +1067,6 @@
       font-weight: 600;
     }
     
-    .action-buttons {
-      display: flex;
-      gap: 15px;
-      margin-top: 30px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    
     .action-btn {
       padding: 12px 24px;
       border-radius: 25px;
@@ -1099,30 +1076,15 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-    }
-    
-    .btn-primary {
       background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
       border: none;
     }
-    
-    .btn-primary:hover {
+
+    .action-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
       color: white;
-    }
-    
-    .btn-outline {
-      background: transparent;
-      color: #667eea;
-      border: 2px solid #667eea;
-    }
-    
-    .btn-outline:hover {
-      background: #667eea;
-      color: white;
-      transform: translateY(-2px);
     }
     
     .event-meta {
@@ -1482,11 +1444,6 @@
 </head>
 <body>
   <div class="event-details-container">
-    <a href="index.html" class="back-btn">
-      <i class="fas fa-arrow-left"></i>
-      Back to Map
-    </a>
-    
     <div id="loading" class="loading">
       <div class="loading-spinner"></div>
       <h3>Loading event details...</h3>

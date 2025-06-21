@@ -205,15 +205,6 @@ h1, h2, h3, h4, h5, h6, .stat-value, .section-title, .feature-card h3, .step-car
   transform: scale(1.06);
 }
 
-.btn-outline {
-  background: #fff;
-  color: #4b0082;
-  border: 2px solid #4b0082;
-}
-.btn-outline:hover {
-  background: #f3eaff;
-  color: #4b0082;
-}
 .hero-stats {
   display: flex;
   gap: 2.5rem;
@@ -544,6 +535,10 @@ footer a:hover {
   border: none;
   padding: 0;
   overflow: hidden;
+}
+
+.leaflet-popup-close-button {
+  display: none !important;
 }
 
 .custom-popup .leaflet-popup-content {
