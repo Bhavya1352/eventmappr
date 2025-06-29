@@ -2,8 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import FooterSection from './components/sections/FooterSection';
-import HomePage from './pages/HomePage';
-import TouristPlacesPage from './pages/tourist-places';
+import HomePage from '@/pages/HomePage';
+import TouristPlacesPage from '@/pages/tourist-places';
+
+
 
 // Import CSS
 import './styles/style.css';
@@ -21,7 +23,6 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/tourist-places" element={<TouristPlacesPage />} />
-            {/* Other routes can be added here */}
           </Routes>
         </main>
         <FooterSection />
