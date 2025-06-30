@@ -1,4 +1,4 @@
-# 🗺 EventMappr 
+<h1 align="center"> 🗺 EventMappr</h1> 
 
 **EventMappr** is a lightweight, open-source community event mapping web app. Users can discover, add, and explore local events pinned on an interactive map.
 Interactive, frontend web app for discovering and cataloging community events on a map.
@@ -24,8 +24,34 @@ Interactive, frontend web app for discovering and cataloging community events on
   </a>
 </p>
 
+<p align="center">
+<a href="https://eventmappr.vercel.app/"><strong>🚀 Live Demo</strong></a>
 
-Live demo: **https://eventmappr.vercel.app/**
+---
+
+<details>
+  <summary><strong>📑 Table of Contents</strong></summary>
+
+  - [🚀 Features](#-features)
+  - [📱 How to Use](#-how-to-use)
+  - [🛠️ Tech Stack](#️-tech-stack)
+  - [🚀 Getting Started](#-getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Development](#development)
+    - [Building for Production](#building-for-production)
+  - [📜 Available Scripts](#-available-scripts)
+  - [📁 Project Structure Overview](#-project-structure-overview)
+  - [📌 Usage Guide](#-usage-guide)
+  - [🧑‍💻 Contributing](#-contributing)
+    - [📌 How to Contribute](#-how-to-contribute)
+    - [📋 Contribution Guidelines](#-contribution-guidelines)
+  - [💡 Feature Ideas & Roadmap](#-feature-ideas--roadmap)
+  - [🙌 Acknowledgements](#-acknowledgements)
+  - [🌟 Awesome Contributors](#-awesome-contributors)
+  - [📄 License](#-license)
+
+  </details>
 
 ---
 
@@ -116,7 +142,9 @@ To start the production server:
 npm start
 ```
 
-## Available Scripts
+---
+
+## 📜 Available Scripts
 
 - `npm run dev` - Starts the development server on port 3000
 - `npm run build` - Creates a production build
@@ -149,6 +177,7 @@ npm start
 ```
 
 ---
+
 ## 📌 Usage Guide
 
 1. **View events** — Load the app to see all events pinned on the map
@@ -223,7 +252,7 @@ We welcome contributions to improve EventMappr!
 - Community inspiration from local engagement and open-source mapping initiatives
 ---
 
-### 🌟 Awesome Contributors
+## 🌟 Awesome Contributors
 
 <a href="https://github.com/Bhavya1352/eventmappr/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Bhavya1352/eventmappr" />
@@ -237,3 +266,5 @@ Released under the [MIT License](LICENSE).
 ---
 
 > Built with ❤️ by [Bhavya1352](https://github.com/Bhavya1352) and the open-source community.
+
+---
