@@ -132,6 +132,7 @@ const FAQSection = () => {
         
         .faq-item {
           background-color: var(--background);
+          max-height: calc(1lh + 2rem);
           border-radius: 12px;
           overflow: hidden;
           transition: all 0.3s ease;
@@ -147,6 +148,7 @@ const FAQSection = () => {
         .faq-item.active {
           box-shadow: 0 8px 30px rgba(var(--primary-rgb), 0.15);
           border-color: rgba(var(--primary-rgb), 0.2);
+          max-height: unset
         }
         
         .faq-question {
