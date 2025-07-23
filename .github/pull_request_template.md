@@ -17,7 +17,7 @@ Fixes: #[issue-number]
 
 ## 📋 Checklist
 
-- [ ] My code follows the contribution guidelines of Civix
+- [ ] My code follows the contribution guidelines of Eventmappr
 - [ ] I have tested my changes locally
 - [ ] I have updated relevant documentation
 - [ ] I have linked related issues (if any)
