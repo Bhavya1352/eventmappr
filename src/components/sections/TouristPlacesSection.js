@@ -136,7 +136,7 @@ export default function TouristPlacesSection() {
   }, []);
 
   return (
-    <div className="main-content font-sans bg-white" style={{ position: 'relative' }}>
+    <div className="main-content font-sans bg-white overflow-x-hidden" style={{ position: 'relative' }}>
       {/* Video background for header */}
       <style jsx>{`
         .main-content {
@@ -151,8 +151,9 @@ export default function TouristPlacesSection() {
 
         .tourist-places-container {
           display: flex;
-          height: 100%;
-          width: 100%;
+          flex-wrap: wrap;
+          max-width: 100%;
+          margin: 0 auto; /* optional centering */
           
           justifyContent: center;
           alignItems: center;
@@ -436,11 +437,14 @@ export default function TouristPlacesSection() {
       max-width: 800px;
     }
   }
-  @media (max-width: 768px) {
-    .tp-sidebar {
-      max-width: 100%;
-      border-radius: 12px;
-    }
+@media (max-width: 768px) {
+  .tp-sidebar,
+  .tp-map-area {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 100%;
+  }
+}
     
     .list-places {
       padding: 12px;
@@ -575,7 +579,7 @@ export default function TouristPlacesSection() {
           </div>
         </div>
       </div>
-      <div className="tourist-places-container">
+      <div className="tourist-places-container flex flex-wrap max-w-full">
         {/* Sidebar */}
         <aside className="tp-sidebar">
           {error && (
