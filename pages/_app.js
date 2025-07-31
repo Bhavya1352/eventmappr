@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { initializeFirebase } from '../utils/firebase';
 import AOS from 'aos'; // Import the AOS library
 import Layout from '../components/layout/Layout';
+import { AuthProvider } from '../contexts/AuthContext';
 
 import Cursor from '../components/Cursor';
 import Head from 'next/head';
@@ -51,10 +52,12 @@ function MyApp({ Component, pageProps }) {
     <Head>
       <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
     </Head>
-    <Layout>
-      <Component {...pageProps} />
-      <Cursor/>
-    </Layout>
+    <AuthProvider>
+      <Layout>
+        <Component {...pageProps} />
+        <Cursor/>
+      </Layout>
+    </AuthProvider>
   </>
 );
 
