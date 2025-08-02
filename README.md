@@ -26,6 +26,7 @@ Interactive, frontend web app for discovering and cataloging community events on
 
 <p align="center">
 <a href="https://eventmappr.vercel.app/"><strong>🚀 Live Demo</strong></a>
+[🔝 Back to Top](#-eventmappr)
 
 ---
 
@@ -52,6 +53,7 @@ Interactive, frontend web app for discovering and cataloging community events on
   - [📄 License](#-license)
 
   </details>
+  [🔝 Back to Top](#-eventmappr)
 
 ---
 
@@ -68,6 +70,7 @@ Interactive, frontend web app for discovering and cataloging community events on
 - ☁️ **NEW: Weather Planner** - Users can check 5-day weather forecasts for any city to help plan suitable dates for events
 - 📸 **NEW: Event Gallery** - A dedicated page displaying user-shared images from past events, fostering community engagement
 - 🔄 **NEW: Modular Routing** - Enhanced navigation with react-router-dom for better user experience
+- [🔝 Back to Top](#-eventmappr)
 
 ---
 
@@ -83,6 +86,7 @@ Interactive, frontend web app for discovering and cataloging community events on
    - Mini map showing exact location
    - Organizer and contact information
    - Date and time details
+   - [🔝 Back to Top](#-eventmappr)
 
 ---
 
@@ -95,6 +99,7 @@ Interactive, frontend web app for discovering and cataloging community events on
 - **Leaflet.js** – Open-source mapping library  
 - **OpenStreetMap** – Free map tile provider  
 - **localStorage** – Lightweight, in-browser persistence
+- [🔝 Back to Top](#-eventmappr)
 
 ---
 
@@ -141,7 +146,7 @@ To start the production server:
 ```bash
 npm start
 ```
-
+[🔝 Back to Top](#-eventmappr)
 ---
 
 ## 📜 Available Scripts
@@ -151,7 +156,7 @@ npm start
 - `npm start` - Starts the production server
 - `npm run lint` - Runs ESLint to check code quality
 - `npm run clean` - Cleans build artifacts
-
+[🔝 Back to Top](#-eventmappr)
 ---
 
 ## 📁 Project Structure Overview
@@ -175,21 +180,21 @@ npm start
 ├── next.config.js       # Next.js configuration
 └── package.json         # Project dependencies and scripts
 ```
-
+[🔝 Back to Top](#-eventmappr)
 ---
 
 ## 📌 Usage Guide
 
 1. **View events** — Load the app to see all events pinned on the map
 
-1. **Add event** — Click on map, fill in the form (title, category, datetime, contact), and hit Save
+2. **Add event** — Click on map, fill in the form (title, category, datetime, contact), and hit Save
 
-1. **Filter** — Select categories via checkboxes to hide/show specific events
+3. **Filter** — Select categories via checkboxes to hide/show specific events
 
-1. **Find nearby** — Click "📍 Find Nearby" to center map at your current position
+4. **Find nearby** — Click "📍 Find Nearby" to center map at your current position
 
-1. **View details** — Click any marker to view full event information
-
+5. **View details** — Click any marker to view full event information
+[🔝 Back to Top](#-eventmappr)
 ---
 
 ## 🧑‍💻 Contributing
@@ -222,7 +227,7 @@ We welcome contributions to improve EventMappr!
 - Use consistent code formatting
 - Test features before submitting
 - Be respectful and collaborative in reviews
-
+[🔝 Back to Top](#-eventmappr)
 ---
 
 ## 💡 Feature Ideas & Roadmap
@@ -239,7 +244,7 @@ We welcome contributions to improve EventMappr!
 - 🔜 Shareable event links
 - 🔜 User authentication (e.g., via Firebase)
 - 🔜 Category tags and filtering UX improvements
-
+[🔝 Back to Top](#-eventmappr)
 ---
 ## 🙌 Acknowledgements
 
@@ -250,6 +255,7 @@ We welcome contributions to improve EventMappr!
 - [OpenStreetMap](https://www.openstreetmap.org) – for free and open map tiles  
 - [React](https://reactjs.org) - for the UI component library
 - Community inspiration from local engagement and open-source mapping initiatives
+- [🔝 Back to Top](#-eventmappr)
 ---
 
 ## 🌟 Awesome Contributors
@@ -266,5 +272,7 @@ Released under the [MIT License](LICENSE).
 ---
 
 > Built with ❤️ by [Bhavya1352](https://github.com/Bhavya1352) and the open-source community.
+>
+> [🔝 Back to Top](#-eventmappr)
 
 ---
