@@ -33,6 +33,31 @@ const CURRENCIES = {
   HKD: { name: "Hong Kong Dollar", symbol: "HK$" }
 };
 
+
+const FLAG_MAP = {
+  USD: "us",
+  EUR: "eu",
+  GBP: "gb",
+  JPY: "jp",
+  AUD: "au",
+  CAD: "ca",
+  CHF: "ch",
+  CNY: "cn",
+  INR: "in",
+  BRL: "br",
+  RUB: "ru",
+  ZAR: "za",
+  MXN: "mx",
+  SGD: "sg",
+  NZD: "nz",
+  SEK: "se",
+  NOK: "no",
+  DKK: "dk",
+  PLN: "pl",
+  HKD: "hk"
+};
+
+
 const USD_RATES = {
   USD: 1, EUR: 0.92, GBP: 0.79, JPY: 155.5, AUD: 1.51, CAD: 1.37,
   CHF: 0.87, CNY: 7.23, INR: 83.3, BRL: 5.27, RUB: 92.4, ZAR: 18.1,
@@ -139,23 +164,38 @@ export default function CurrencyConverter() {
                 </div>
                 <div className="field">
                   <label>From</label>
-                  <select value={from} onChange={(e) => setFrom(e.target.value)}>
-                    {Object.keys(CURRENCIES).map((code) => (
-                      <option key={code} value={code}>
-                        {code} - {CURRENCIES[code].name}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="custom-select">
+                    <img
+                      src={`https://flagcdn.com/w40/${FLAG_MAP[from]}.png`}
+                      alt={from}
+                      className="flag"
+                    />
+                    <select value={from} onChange={(e) => setFrom(e.target.value)}>
+                      {Object.keys(CURRENCIES).map((code) => (
+                        <option key={code} value={code}>
+                          {code} - {CURRENCIES[code].name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
+
                 <div className="field">
                   <label>To</label>
-                  <select value={to} onChange={(e) => setTo(e.target.value)}>
-                    {Object.keys(CURRENCIES).map((code) => (
-                      <option key={code} value={code}>
-                        {code} - {CURRENCIES[code].name}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="custom-select">
+                    <img
+                      src={`https://flagcdn.com/w40/${FLAG_MAP[to]}.png`}
+                      alt={to}
+                      className="flag"
+                    />
+                    <select value={to} onChange={(e) => setTo(e.target.value)}>
+                      {Object.keys(CURRENCIES).map((code) => (
+                        <option key={code} value={code}>
+                          {code} - {CURRENCIES[code].name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -183,12 +223,20 @@ export default function CurrencyConverter() {
               <div className="popular-grid">
                 {popular.map((p) => (
                   <div key={p.code} className="pop-card">
+                    <img
+                      src={`https://flagcdn.com/w40/${FLAG_MAP[p.code]}.png`}
+                      alt={p.code}
+                      className="flag"
+                      style={{ width: "24px", height: "18px", marginBottom: "4px" }}
+                    />
                     <h4>{p.code}</h4>
                     <p>{p.value} {p.symbol}</p>
                   </div>
+
                 ))}
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -263,6 +311,19 @@ export default function CurrencyConverter() {
           background: rgba(255,255,255,0.9);
           width: 100%;
         }
+        .custom-select {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
+
+        .custom-select .flag {
+          width: 24px;
+          height: 18px;
+          margin-right: 8px;
+          border-radius: 3px;
+        }
+
         .convert-btn {
           margin-top: 20px;
           width: 100%;
