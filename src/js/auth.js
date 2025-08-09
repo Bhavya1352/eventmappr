@@ -1,11 +1,17 @@
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyC6SVlrk8ymdPFOqN5FTUQ1QydK8YTlZeU
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=eventmappr-b1b81.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=eventmappr-b1b81
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=eventmappr-b1b81.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=700964450420
+NEXT_PUBLIC_FIREBASE_APP_ID=1:700964450420:web:ff727469ff05f049d5a121
+
 firebase.initializeApp({
-  apiKey: "AIzaSyDOhPO50_bSDoNJ1lKOV7NRN672dq_1Ldg",
-  authDomain: "eventmappr23.firebaseapp.com",
-  projectId: "eventmappr23",
-  storageBucket: "eventmappr23.firebasestorage.app",
-  messagingSenderId: "767568582880",
-  appId: "1:767568582880:web:c5438cf3a3d371a47d1885",
-  measurementId: "G-VG4E8PJ29S"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 });
 
 let currentUser = null;
