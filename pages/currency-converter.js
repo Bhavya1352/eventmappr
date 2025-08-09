@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { TrendingUp, ArrowRightLeft, DollarSign, ChevronDown } from "lucide-react";
+import { Bell } from "lucide-react"; // New icon for alert feature
 
 const CURRENCIES = {
   USD: { name: "US Dollar", symbol: "$" }, EUR: { name: "Euro", symbol: "€" },
@@ -37,6 +38,16 @@ export default function CurrencyConverter() {
   const [popular, setPopular] = useState([]);
   const [fromDropdownOpen, setFromDropdownOpen] = useState(false);
   const [toDropdownOpen, setToDropdownOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+
+  const [alertFrom, setAlertFrom] = useState("USD");
+  const [alertTo, setAlertTo] = useState("EUR");
+  const [alertCondition, setAlertCondition] = useState(">");
+  const [alertThreshold, setAlertThreshold] = useState("");
+  const [alertEmail, setAlertEmail] = useState("");
+  const [alertActive, setAlertActive] = useState(false);
+
 
   function convertCurrency() {
     const amt = parseFloat(amount);
@@ -77,6 +88,22 @@ export default function CurrencyConverter() {
     setFrom(to);
     setTo(temp);
   };
+  useEffect(() => {
+  if (!alertActive) return;
+  const checkInterval = setInterval(() => {
+    const currentRate = RATES[alertFrom][alertTo];
+    if (
+      (alertCondition === ">" && currentRate > parseFloat(alertThreshold)) ||
+      (alertCondition === "<" && currentRate < parseFloat(alertThreshold))
+    ) {
+      // Show custom alert UI
+      setAlertMessage(`📢 Rate Alert: 1 ${alertFrom} is now ${currentRate} ${alertTo}`);
+      setAlertActive(false); // stop after triggering once
+    }
+  }, 5000);
+  return () => clearInterval(checkInterval);
+}, [alertActive, alertFrom, alertTo, alertCondition, alertThreshold]);
+
 
   const CustomDropdown = ({ value, onChange, isOpen, setIsOpen, label }) => (
     <div style={styles.selectGroup}>
@@ -127,6 +154,14 @@ export default function CurrencyConverter() {
             </div>
             <p style={styles.subtitle}>Real-time currency conversion for global travelers</p>
           </div>
+          {alertMessage && (
+  <div style={styles.alertBox}>
+    <span>{alertMessage}</span>
+    <button onClick={() => setAlertMessage("")} style={styles.alertCloseBtn}>
+      &times;
+    </button>
+  </div>
+)}
 
           <div style={styles.mainGrid}>
             <div style={styles.leftColumn}>
@@ -260,6 +295,31 @@ const styles = {
     maxWidth: '1400px',
     margin: '0 auto'
   },
+  alertBox: {
+  position: "fixed",
+  bottom: "20px",
+  right: "20px",
+  backgroundColor: "#059669",
+  color: "white",
+  padding: "16px 24px",
+  borderRadius: "12px",
+  boxShadow: "0 4px 12px rgba(5, 150, 105, 0.4)",
+  display: "flex",
+  alignItems: "center",
+  gap: "12px",
+  fontWeight: "600",
+  maxWidth: "320px",
+  zIndex: 1000,
+},
+alertCloseBtn: {
+  background: "transparent",
+  border: "none",
+  color: "white",
+  fontSize: "20px",
+  fontWeight: "700",
+  cursor: "pointer",
+  lineHeight: "1",
+},
   header: {
     textAlign: 'center',
     marginBottom: '48px'

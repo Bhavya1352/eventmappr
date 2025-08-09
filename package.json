@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "description": "*EventMappr* is a lightweight, open-source community event mapping web app. Users can discover, add, and explore local events pinned on an interactive map. Built with *React, Next.js, and **Leaflet.js*, it offers a simple and engaging way to visualize what's happening around you.",
+  "homepage": "https://srinancharaiah167.github.io/eventmappr",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "clean": "rm -rf .next"
+    "clean": "rm -rf .next out",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d out",
+    "export": "next export"
   },
   "keywords": [],
   "author": "",
@@ -41,7 +45,9 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^8.41.0",
     "eslint-config-next": "^13.4.3",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "vite-plugin-compression": "^0.5.1"
   }
 }
