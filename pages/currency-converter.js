@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { TrendingUp, ArrowRightLeft, DollarSign, ChevronDown } from "lucide-react";
+
+import { Currency } from "lucide-react";"./CurrencyConverter.css";
+
+
 import { Bell } from "lucide-react"; // New icon for alert feature
+
 
 const CURRENCIES = {
   USD: { name: "US Dollar", symbol: "$" }, EUR: { name: "Euro", symbol: "€" },
@@ -163,7 +168,7 @@ export default function CurrencyConverter() {
   </div>
 )}
 
-          <div style={styles.mainGrid}>
+          <div className="main-grid">
             <div style={styles.leftColumn}>
               <div style={styles.card}>
                 <h2 style={styles.cardTitle}>
