@@ -939,7 +939,6 @@ const MapExplorer = ({
   }
 `}</style>
 
-
     </div>
   );
 };

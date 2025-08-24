@@ -1,146 +1,195 @@
-import React from 'react';
+import React from "react";
 
 function Cookies() {
   return (
     <div className="cookies-container">
       <div className="cookies-page">
-        <div className="header-section">
-          <div className="icon-wrapper">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-              <circle cx="8" cy="8" r="1" fill="currentColor"/>
-              <circle cx="16" cy="8" r="1" fill="currentColor"/>
-              <circle cx="12" cy="16" r="1" fill="currentColor"/>
-              <circle cx="6" cy="14" r="1" fill="currentColor"/>
-              <circle cx="18" cy="14" r="1" fill="currentColor"/>
-              <circle cx="10" cy="12" r="1" fill="currentColor"/>
-              <circle cx="14" cy="10" r="1" fill="currentColor"/>
+        {/* Header */}
+        <div className="header-section glass">
+          <div className="icon-wrapper animate-bounce glass-light">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+              <circle cx="8" cy="8" r="1" fill="currentColor" />
+              <circle cx="16" cy="8" r="1" fill="currentColor" />
+              <circle cx="12" cy="16" r="1" fill="currentColor" />
+              <circle cx="6" cy="14" r="1" fill="currentColor" />
+              <circle cx="18" cy="14" r="1" fill="currentColor" />
+              <circle cx="10" cy="12" r="1" fill="currentColor" />
+              <circle cx="14" cy="10" r="1" fill="currentColor" />
             </svg>
           </div>
-          <h1 className="title">Cookie Policy</h1>
-          <p className="subtitle">How we use cookies to enhance your experience</p>
-          <div className="updated-badge">
-            <span>Last updated: June 29, 2025</span>
+          <h1 className="title">🍪 Cookie Policy</h1>
+          <p className="subtitle">
+            Transparent, secure, and designed for your experience
+          </p>
+          <div className="updated-badge glass-light">
+            <span>📅 Last updated: June 29, 2025</span>
           </div>
         </div>
 
+        {/* Content */}
         <div className="content-grid">
-          <section className="section">
-            <div className="section-header">
-              <span className="section-number">01</span>
-              <h2>What Are Cookies?</h2>
-            </div>
-            <p>
-              Cookies are small text files stored on your device to help us improve your experience and analyze usage. They're essential for modern web functionality and personalization.
-            </p>
-          </section>
-
-          <section className="section">
-            <div className="section-header">
-              <span className="section-number">02</span>
-              <h2>How We Use Cookies</h2>
-            </div>
-            <div className="cookie-types">
-              <div className="cookie-card">
-                <div className="card-icon">⚙️</div>
-                <div className="card-content">
-                  <h3>Essential Cookies</h3>
-                  <p>Enable core functionality and secure access</p>
+          {[
+            {
+              number: "01",
+              title: "What Are Cookies?",
+              desc: "Cookies are small text files stored on your device to help us improve your experience and analyze usage.",
+            },
+            {
+              number: "02",
+              title: "How We Use Cookies",
+              desc: "We categorize cookies to help you understand their purpose:",
+              custom: (
+                <div className="cookie-types">
+                  {[
+                    {
+                      icon: "⚙️",
+                      title: "Essential Cookies",
+                      desc: "Enable core functionality and secure access",
+                    },
+                    {
+                      icon: "📊",
+                      title: "Analytics Cookies",
+                      desc: "Help us understand how you use our platform",
+                    },
+                    {
+                      icon: "🎯",
+                      title: "Preference Cookies",
+                      desc: "Remember your settings and personalization",
+                    },
+                  ].map((c, i) => (
+                    <div className="cookie-card glass" key={i}>
+                      <div className="card-icon">{c.icon}</div>
+                      <div className="card-content">
+                        <h3>{c.title}</h3>
+                        <p>{c.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-              <div className="cookie-card">
-                <div className="card-icon">📊</div>
-                <div className="card-content">
-                  <h3>Analytics Cookies</h3>
-                  <p>Help us understand how you use our platform</p>
+              ),
+            },
+            {
+              number: "03",
+              title: "Types of Cookies We Use",
+              custom: (
+                <div className="cookie-duration-grid">
+                  {[
+                    {
+                      icon: "⏱️",
+                      title: "Session Cookies",
+                      desc: "Expire when you close your browser",
+                    },
+                    {
+                      icon: "🔄",
+                      title: "Persistent Cookies",
+                      desc: "Remain until deleted or expired",
+                    },
+                  ].map((c, i) => (
+                    <div className="duration-item glass" key={i}>
+                      <span className="duration-icon">{c.icon}</span>
+                      <div className="duration-content">
+                        <h4>{c.title}</h4>
+                        <p>{c.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-              <div className="cookie-card">
-                <div className="card-icon">🎯</div>
-                <div className="card-content">
-                  <h3>Preference Cookies</h3>
-                  <p>Remember your settings and personalization</p>
+              ),
+            },
+            {
+              number: "04",
+              title: "Managing Cookies",
+              custom: (
+                <div className="management-options">
+                  {[
+                    {
+                      icon: "🌐",
+                      title: "Browser Settings",
+                      desc: "Control cookies through your browser preferences",
+                    },
+                    {
+                      icon: "⚠️",
+                      title: "Impact Notice",
+                      desc: "Disabling cookies may affect platform functionality",
+                    },
+                  ].map((c, i) => (
+                    <div className="management-card glass" key={i}>
+                      <div className="card-icon">{c.icon}</div>
+                      <div className="card-content">
+                        <h3>{c.title}</h3>
+                        <p>{c.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
+              ),
+            },
+            {
+              number: "05",
+              title: "Third-Party Services",
+              desc: "We use third-party analytics services that may set their own cookies to help us improve performance.",
+            },
+            {
+              number: "06",
+              title: "Changes to This Policy",
+              desc: "We may update this Cookie Policy from time to time. Please check back periodically.",
+            },
+          ].map((sec, i) => (
+            <section className="section fade-in glass" key={i}>
+              <div className="section-header">
+                <span className="section-number">{sec.number}</span>
+                <h2>{sec.title}</h2>
               </div>
-            </div>
-          </section>
-
-          <section className="section">
-            <div className="section-header">
-              <span className="section-number">03</span>
-              <h2>Types of Cookies We Use</h2>
-            </div>
-            <div className="cookie-duration-grid">
-              <div className="duration-item">
-                <span className="duration-icon">⏱️</span>
-                <div className="duration-content">
-                  <h4>Session Cookies</h4>
-                  <p>Expire when you close your browser</p>
-                </div>
-              </div>
-              <div className="duration-item">
-                <span className="duration-icon">🔄</span>
-                <div className="duration-content">
-                  <h4>Persistent Cookies</h4>
-                  <p>Remain until deleted or expired</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="section">
-            <div className="section-header">
-              <span className="section-number">04</span>
-              <h2>Managing Cookies</h2>
-            </div>
-            <div className="management-options">
-              <div className="management-card">
-                <div className="card-icon">🌐</div>
-                <div className="card-content">
-                  <h3>Browser Settings</h3>
-                  <p>Control cookies through your browser preferences</p>
-                </div>
-              </div>
-              <div className="management-card">
-                <div className="card-icon">⚠️</div>
-                <div className="card-content">
-                  <h3>Impact Notice</h3>
-                  <p>Disabling cookies may affect platform functionality</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="section">
-            <div className="section-header">
-              <span className="section-number">05</span>
-              <h2>Third-Party Services</h2>
-            </div>
-            <p>
-              We use third-party analytics services that may set their own cookies. These help us understand user behavior and improve our platform performance.
-            </p>
-          </section>
-
-          <section className="section">
-            <div className="section-header">
-              <span className="section-number">06</span>
-              <h2>Changes to This Policy</h2>
-            </div>
-            <p>
-              We may update this Cookie Policy from time to time. Any changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically.
-            </p>
-          </section>
+              {sec.desc && <p>{sec.desc}</p>}
+              {sec.custom && sec.custom}
+            </section>
+          ))}
         </div>
 
+        {/* Contact */}
         <div className="contact-section">
-          <div className="contact-card">
-            <h3>Questions about our cookies?</h3>
-            <p>Our team is here to help you understand how we use cookies and protect your privacy.</p>
+          <div className="contact-card glass-strong">
+            <h3>❓ Questions about cookies?</h3>
+            <p>
+              Our team is here to help you understand how we use cookies and
+              protect your privacy.
+            </p>
             <a href="mailto:support@eventmappr.com" className="contact-button">
               <span>Get in Touch</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 17L17 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M7 7H17V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7 17L17 7"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M7 7H17V17"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </a>
           </div>
@@ -150,367 +199,161 @@ function Cookies() {
       <style jsx>{`
         .cookies-container {
           min-height: 100vh;
-          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+          background: url("https://grainy-gradients.vercel.app/noise.svg"),
+            linear-gradient(135deg, #dbeafe, #fef9c3);
+          background-size: cover;
           padding: 2rem 1rem;
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
         }
-
         .cookies-page {
-          max-width: 800px;
+          max-width: 900px;
           margin: 0 auto;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
           border-radius: 24px;
-          border: 1px solid rgba(148, 163, 184, 0.1);
-          box-shadow: 
-            0 20px 25px -5px rgba(0, 0, 0, 0.1),
-            0 10px 10px -5px rgba(0, 0, 0, 0.04);
           overflow: hidden;
-          animation: slideUp 0.6s ease-out;
+          backdrop-filter: blur(20px);
         }
-
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
         .header-section {
           text-align: center;
-          padding: 3rem 2rem 2rem;
-          background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
-          color: white;
-          position: relative;
-          overflow: hidden;
+          padding: 3rem 2rem;
+          color: #111827; /* ✅ Darker text */
+          background: rgba(255, 255, 255, 0.7);
         }
-
-        .header-section::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.1"/><circle cx="10" cy="90" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-        }
-
         .icon-wrapper {
-          position: relative;
-          z-index: 1;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 64px;
-          height: 64px;
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 20px;
-          backdrop-filter: blur(10px);
+          padding: 1rem;
+          border-radius: 16px;
           margin-bottom: 1rem;
-          border: 1px solid rgba(255, 255, 255, 0.3);
+          color: #1e40af; /* ✅ Dark blue icon */
         }
-
         .title {
-          position: relative;
-          z-index: 1;
           font-size: 2.5rem;
-          font-weight: 700;
-          margin: 0 0 0.5rem 0;
-          letter-spacing: -0.025em;
+          font-weight: 800;
+          margin-bottom: 0.5rem;
+          color: #111827; /* ✅ Dark heading */
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-
         .subtitle {
-          position: relative;
-          z-index: 1;
-          font-size: 1.125rem;
-          opacity: 0.9;
-          margin: 0 0 1.5rem 0;
-          font-weight: 400;
+          font-size: 1.1rem;
+          color: #1e293b; /* ✅ Darker subtitle */
         }
-
         .updated-badge {
-          position: relative;
-          z-index: 1;
-          display: inline-block;
-          background: rgba(255, 255, 255, 0.2);
-          backdrop-filter: blur(10px);
+          margin-top: 1rem;
+          font-size: 0.9rem;
           padding: 0.5rem 1rem;
-          border-radius: 20px;
-          font-size: 0.875rem;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.6);
+          color: #374151; /* ✅ Darker date text */
+        }
+        .glass {
+          background: rgba(255, 255, 255, 0.25);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          border-radius: 16px;
+        }
+        .glass-light {
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(8px);
+          border-radius: 12px;
+        }
+        .glass-strong {
+          background: rgba(255, 255, 255, 0.35);
+          backdrop-filter: blur(20px);
           border: 1px solid rgba(255, 255, 255, 0.3);
         }
-
         .content-grid {
           padding: 2rem;
         }
-
         .section {
-          margin-top: -70px;
+          margin-bottom: 2.5rem;
+          padding: 1.5rem;
         }
-
-        .section:last-child {
-          margin-bottom: 0;
-        }
-
         .section-header {
           display: flex;
           align-items: center;
           gap: 1rem;
           margin-bottom: 1rem;
         }
-
         .section-number {
+          background: rgba(37, 99, 235, 0.8);
+          color: white;
+          width: 40px;
+          height: 40px;
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 32px;
-          height: 32px;
-          background: linear-gradient(135deg, #3b82f6, #1e40af);
-          color: white;
-          border-radius: 10px;
-          font-size: 0.875rem;
+          border-radius: 12px;
           font-weight: 600;
-          flex-shrink: 0;
         }
-
         .section h2 {
           font-size: 1.5rem;
-          font-weight: 600;
-          color: #1e293b;
           margin: 0;
-          letter-spacing: -0.025em;
+          color: #111827; /* ✅ Dark headings */
         }
-
         .section p {
-          font-size: 1rem;
-          line-height: 1.7;
-          color: #475569;
-          margin: 0;
+          color: #1f2937; /* ✅ Softer but dark body text */
+          line-height: 1.6;
         }
-
-        .cookie-types {
-          display: grid;
-          gap: 1rem;
-          margin-top: 1rem;
-        }
-
-        .cookie-card {
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
-          padding: 1.5rem;
-          background: #f8fafc;
-          border-radius: 16px;
-          border: 1px solid #e2e8f0;
-          transition: all 0.2s ease;
-        }
-
-        .cookie-card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-          border-color: #cbd5e1;
-        }
-
-        .management-options {
-          display: grid;
-          gap: 1rem;
-          margin-top: 1rem;
-        }
-
-        .management-card {
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
-          padding: 1.5rem;
-          background: #f8fafc;
-          border-radius: 16px;
-          border: 1px solid #e2e8f0;
-          transition: all 0.2s ease;
-        }
-
-        .management-card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-          border-color: #cbd5e1;
-        }
-
-        .card-icon {
-          font-size: 1.5rem;
-          width: 48px;
-          height: 48px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-          border-radius: 12px;
-          flex-shrink: 0;
-        }
-
-        .card-content h3 {
-          font-size: 1.125rem;
-          font-weight: 600;
-          color: #1e293b;
-          margin: 0 0 0.25rem 0;
-        }
-
-        .card-content p {
-          font-size: 0.875rem;
-          color: #64748b;
-          margin: 0;
-        }
-
-        .cookie-duration-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 1rem;
-          margin-top: 1rem;
-        }
-
+        .cookie-card,
+        .management-card,
         .duration-item {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
           padding: 1rem;
-          background: #f8fafc;
-          border-radius: 12px;
-          border: 1px solid #e2e8f0;
-          transition: all 0.2s ease;
-        }
-
-        .duration-item:hover {
-          background: #f1f5f9;
-          border-color: #cbd5e1;
-        }
-
-        .duration-icon {
-          font-size: 1.125rem;
-          width: 32px;
-          height: 32px;
+          border-radius: 16px;
           display: flex;
+          gap: 1rem;
           align-items: center;
-          justify-content: center;
-          background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-          border-radius: 8px;
-          flex-shrink: 0;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
-        .duration-content h4 {
-          font-size: 0.875rem;
-          font-weight: 600;
-          color: #1e293b;
-          margin: 0 0 0.25rem 0;
+        .cookie-card:hover,
+        .management-card:hover,
+        .duration-item:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
-
-        .duration-content p {
-          font-size: 0.75rem;
-          color: #64748b;
-          margin: 0;
+        .card-icon,
+        .duration-icon {
+          font-size: 1.5rem;
+          background: rgba(37, 99, 235, 0.15);
+          border-radius: 12px;
+          padding: 0.75rem;
         }
-
         .contact-section {
           padding: 2rem;
-          border-top: 1px solid #e2e8f0;
-          background: #f8fafc;
         }
-
         .contact-card {
           text-align: center;
           padding: 2rem;
-          background: linear-gradient(135deg, #3b82f6, #1e40af);
           border-radius: 20px;
-          color: white;
-          position: relative;
-          overflow: hidden;
+          color: #111827; /* ✅ Dark text */
         }
-
-        .contact-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
-        }
-
-        .contact-card h3 {
-          position: relative;
-          z-index: 1;
-          font-size: 1.5rem;
-          font-weight: 600;
-          margin: 0 0 0.5rem 0;
-        }
-
-        .contact-card p {
-          position: relative;
-          z-index: 1;
-          opacity: 0.9;
-          margin: 0 0 1.5rem 0;
-        }
-
         .contact-button {
-          position: relative;
-          z-index: 1;
+          margin-top: 1rem;
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
           padding: 0.75rem 1.5rem;
-          background: rgba(255, 255, 255, 0.2);
-          color: white;
-          text-decoration: none;
+          background: rgba(255, 255, 255, 0.25);
+          color: #1e40af;
+          font-weight: 600;
           border-radius: 12px;
-          font-weight: 500;
+          backdrop-filter: blur(8px);
           transition: all 0.2s ease;
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.3);
         }
-
         .contact-button:hover {
-          background: rgba(255, 255, 255, 0.3);
-          transform: translateY(-1px);
+          transform: scale(1.05);
+          background: rgba(255, 255, 255, 0.4);
         }
-
-        @media (max-width: 768px) {
-          .cookies-container {
-            padding: 1rem 0.5rem;
+        .fade-in {
+          animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
           }
-
-          .header-section {
-            padding: 2rem 1rem 1.5rem;
-          }
-
-          .title {
-            font-size: 2rem;
-          }
-
-          .content-grid {
-            padding: 1.5rem;
-          }
-
-          .section-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.5rem;
-          }
-
-          .cookie-types {
-            grid-template-columns: 1fr;
-          }
-
-          .cookie-duration-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .contact-section {
-            padding: 1.5rem;
-          }
-
-          .contact-card {
-            padding: 1.5rem;
+          to {
+            opacity: 1;
+            transform: translateY(0);
           }
         }
       `}</style>
