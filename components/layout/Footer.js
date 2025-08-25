@@ -24,7 +24,7 @@ const Footer = () => {
         <div className="footer-top">
           <div className="logo-section">
             <h3 className="logo-title">
-              <img src={isDarkMode ? '/loggd.svg' : '/logg.svg'} alt="EventMappr Logo" className="logo" />
+              <img src={isDarkMode ? '/loggd.svg' : '/loggd.svg'} alt="EventMappr Logo" className="logo" />
             </h3>
             <p className="description">
               Your hub for finding and sharing local events.
