@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useState } from "react";
 import Head from "next/head";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -17,29 +17,6 @@ import {
   Sun,
 } from "lucide-react";
 
-export default function About() {
-  const [darkMode, setDarkMode] = useState(false);
-
-  // AOS + initial theme
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true, offset: 80 });
-
-    const stored = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
-    const prefers = typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initial = stored ? stored === "dark" : prefers;
-
-    setDarkMode(initial);
-    document.documentElement.classList.toggle("dark", initial);
-  }, []);
-
-  // Persist + apply theme
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", darkMode);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("theme", darkMode ? "dark" : "light");
-    }
-  }, [darkMode]);
-
   const features = [
     { icon: <MapPin size={28} />, label: "Add to Map – Drop a pin, add title, date & more" },
     { icon: <Navigation size={28} />, label: "Find Nearby – Use Geolocation API" },
@@ -48,11 +25,59 @@ export default function About() {
     { icon: <Smartphone size={28} />, label: "Interactive UI – Popups, animations, responsive" },
     { icon: <FileText size={28} />, label: "NEW: Detailed Event Pages" },
     { icon: <Map size={28} />, label: "NEW: Mini Maps on Event Detail" },
-    { icon: <Cloud size={28} />, label: "NEW: Weather Planner (5-day forecast)" },
-    { icon: <Camera size={28} />, label: "NEW: Event Gallery – user shared photos" },
-    { icon: <RotateCcw size={28} />, label: "NEW: Modular Routing with react-router" },
+    {
+      icon: <Cloud size={28} />,
+      label: "NEW: Weather Planner (5-day forecast)",
+    },
+    {
+      icon: <Camera size={28} />,
+      label: "NEW: Event Gallery – user shared photos",
+    },
+    {
+      icon: <RotateCcw size={28} />,
+      label: "NEW: Modular Routing with Next.js",
+    },
   ];
 
+  // Main About Page Component
+  const AboutPage = () => {
+    const [heroGifError, setHeroGifError] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
+  
+    useEffect(() => {
+      // Check localStorage for theme first
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme === 'dark') {
+        setIsDarkMode(true);
+      } else if (storedTheme === 'light') {
+        setIsDarkMode(false);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setIsDarkMode(true);
+      }
+    }, []);
+  
+    useEffect(() => {
+      // Persist theme to localStorage
+      if (isDarkMode) {
+        localStorage.setItem('theme', 'dark');
+      } else {
+        localStorage.setItem('theme', 'light');
+      }
+    }, [isDarkMode]);
+  
+    useEffect(() => {
+      AOS.init({
+        once: true,
+        duration: 1000,
+        easing: 'ease-out-quart',
+        delay: 50,
+      });
+    }, []);
+  
+    const toggleTheme = () => {
+      setIsDarkMode(!isDarkMode);
+    };
+  
   return (
     <>
       <Head>
@@ -117,17 +142,8 @@ export default function About() {
         }
       `}</style>
 
-      <div className="about-page">
-        {/* Dark Mode Toggle */}
-        <button
-          className="dark-toggle"
-          onClick={() => setDarkMode((v) => !v)}
-          aria-label="Toggle dark mode"
-          title="Toggle dark mode"
-        >
-          {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-        </button>
-
+      <div className={`about-page${isDarkMode ? " dark" : ""}`}>
+       
         <section className="hero-section" data-aos="fade-down">
           <div className="hero-content">
             <h1 data-aos="fade-up" data-aos-delay="300">About EventMappr</h1>
@@ -184,36 +200,20 @@ export default function About() {
           </div>
         </section>
       </div>
-
-      {/* Component-scoped styles that use the variables */}
-      <style jsx>{`
+    
+      <style jsx global>{`
+        .about-page {
+      {/* Removed global style block for maintainability. Use only scoped <style jsx> below. */}
         .about-page {
           min-height: 100vh;
-          background: linear-gradient(180deg, var(--page-grad-1) 0%, var(--page-grad-2) 100%);
-          color: var(--text);
-          transition: background 0.3s ease, color 0.3s ease;
+          background: linear-gradient(180deg, #fafbff 0%, #f1f5ff 100%);
         }
 
-        .dark-toggle {
-          position: fixed;
-          top: 1rem;
-          right: 1rem;
-          background: var(--surface);
-          color: var(--text);
-          border: 1px solid var(--card-border);
-          border-radius: 999px;
-          padding: 0.45rem 0.6rem;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 6px 16px var(--shadow);
-          cursor: pointer;
-          z-index: 60;
-          transition: transform 0.15s ease, background 0.3s ease, color 0.3s ease;
+        .about-page.dark {
+          background: linear-gradient(180deg, #1e293b 0%, #3b82f6 100%);
         }
-        .dark-toggle:hover { transform: translateY(-1px); }
 
-        /* Hero */
+        /* Hero Section */
         .hero-section {
           padding: 6rem 2rem 4rem;
           text-align: center;
@@ -239,25 +239,80 @@ export default function About() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .hero-section p {
+
+        .about-page .hero-section p {
           font-size: 1.25rem;
           color: var(--muted);
           line-height: 1.7;
           margin-bottom: 3rem;
         }
+        .about-page.dark .hero-section p {
+          color: #fff;
+        }
 
-        .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
-        .stat { text-align: center; }
-        .stat-number { display: block; font-size: 2rem; font-weight: 700; color: var(--accent); margin-bottom: 0.25rem; }
-        .stat-label { font-size: 0.875rem; color: var(--muted); font-weight: 500; }
+        .hero-stats {
+          display: flex;
+          justify-content: center;
+          gap: 3rem;
+          flex-wrap: wrap;
+        }
 
-        /* Features */
-        .features-section { padding: 4rem 2rem; background: var(--surface); }
-        .features-container { max-width: 1200px; margin: 0 auto; }
+        .stat {
+          text-align: center;
+        }
 
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header h2 { font-size: 2.5rem; font-weight: 700; color: var(--heading); margin-bottom: 1rem; }
-        .section-header p { font-size: 1.125rem; color: var(--muted); }
+        .stat-number {
+          display: block;
+          font-size: 2rem;
+          font-weight: 700;
+          color: #3b82f6;
+          margin-bottom: 0.25rem;
+        }
+
+        .about-page .stat-label {
+          font-size: 0.875rem;
+          color: #64748b;
+          font-weight: 500;
+        }
+        
+
+        /* Features Section */
+        .about-page. .features-section {
+          padding: 4rem 2rem;
+          background: white;
+          position: relative;
+        }
+        .about-page.dark .features-section {
+          background: #1e293b;
+        }
+
+        .features-container {
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .section-header {
+          text-align: center;
+          margin-bottom: 4rem;
+        }
+
+        .about-page.dark .features-section .features-container .section-header h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1e293b;
+          margin-bottom: 1rem;
+        }
+        .about-page.dark .section-header h2 {
+          color: #93c5fd;
+        }
+
+        .about-page .section-header p {
+          font-size: 1.125rem;
+          color: #64748b;
+        }
+        .about-page.dark .section-header p {
+          color: #fff;
+        }
 
         .features-grid {
           display: grid;
@@ -301,12 +356,42 @@ export default function About() {
           background: linear-gradient(135deg, var(--accent), #2563eb);
           color: #fff; transform: scale(1.05);
         }
-        .feature-text { font-size: 1rem; color: var(--text); line-height: 1.6; margin: 0; font-weight: 500; }
+        
 
-        /* Stats */
-        .stats-section { padding: 4rem 2rem; background: linear-gradient(135deg, var(--surface-2) 0%, var(--surface) 100%); }
-        .stats-container { max-width: 800px; margin: 0 auto; text-align: center; }
-        .stats-section h3 { font-size: 2rem; font-weight: 700; color: var(--heading); margin-bottom: 2rem; }
+        .feature-text {
+          font-size: 1rem;
+          color: #374151;
+          line-height: 1.6;
+          margin: 0;
+          font-weight: 500;
+        }
+    
+
+
+        /* Stats Section */
+        .about-page .stats-section {
+          padding: 4rem 2rem;
+          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+        
+        .about-page.dark .stats-section {
+          background: #1e293b;
+        }
+
+        .stats-container {
+          max-width: 800px;
+          margin: 0 auto;
+          text-align: center;
+        }
+        
+
+        .stats-section h3 {
+          font-size: 2rem;
+          font-weight: 700;
+          color: #1e293b;
+          margin-top: 2rem;
+          margin-bottom: 2rem;
+        }
 
         .badges-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
         .badges-grid img { height: 32px; border-radius: 6px; transition: transform 0.2s ease; }
@@ -330,4 +415,5 @@ export default function About() {
       `}</style>
     </>
   );
-}
+};
+export default AboutPage;
