@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
-import { TrendingUp, ArrowRightLeft, DollarSign, ChevronDown } from "lucide-react";
-
-import { Currency } from "lucide-react";"./CurrencyConverter.css";
-
-
-import { Bell } from "lucide-react"; // New icon for alert feature
+import { TrendingUp, ArrowRightLeft, DollarSign, ChevronDown, Moon, Sun, Bell, Currency } from "lucide-react";
+import Head from "next/head";
 
 
 const CURRENCIES = {
@@ -44,7 +40,7 @@ export default function CurrencyConverter() {
   const [fromDropdownOpen, setFromDropdownOpen] = useState(false);
   const [toDropdownOpen, setToDropdownOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const [alertFrom, setAlertFrom] = useState("USD");
   const [alertTo, setAlertTo] = useState("EUR");
@@ -52,6 +48,26 @@ export default function CurrencyConverter() {
   const [alertThreshold, setAlertThreshold] = useState("");
   const [alertEmail, setAlertEmail] = useState("");
   const [alertActive, setAlertActive] = useState(false);
+
+  // Theme state will be read from document.documentElement.classList
+  useEffect(() => {
+    // Listen for theme changes from navbar
+    const checkTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setIsDarkMode(isDark);
+    };
+    
+    checkTheme(); // Initial check
+    
+    // Listen for changes
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    
+    return () => observer.disconnect();
+  }, []);
 
 
   function convertCurrency() {
@@ -112,20 +128,20 @@ export default function CurrencyConverter() {
 
   const CustomDropdown = ({ value, onChange, isOpen, setIsOpen, label }) => (
     <div style={styles.selectGroup}>
-      <label style={styles.label}>{label}</label>
+      <label style={isDarkMode ? styles.labelDark : styles.labelLight}>{label}</label>
       <div style={styles.dropdownContainer}>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          style={{...styles.dropdownButton, ...(isOpen ? styles.dropdownButtonOpen : {})}}
+          style={{...(isDarkMode ? styles.dropdownButtonDark : styles.dropdownButtonLight), ...(isOpen ? (isDarkMode ? styles.dropdownButtonOpenDark : styles.dropdownButtonOpenLight) : {})}}
         >
           <div style={styles.dropdownSelected}>
             <span style={styles.currencyCode}>{value}</span>
-            <span style={styles.currencyName}>{CURRENCIES[value].name}</span>
+            <span style={isDarkMode ? styles.currencyNameDark : styles.currencyNameLight}>{CURRENCIES[value].name}</span>
           </div>
-          <ChevronDown style={{...styles.chevronIcon, ...(isOpen ? styles.chevronRotated : {})}} />
+          <ChevronDown style={{...(isDarkMode ? styles.chevronIconDark : styles.chevronIconLight), ...(isOpen ? styles.chevronRotated : {})}} />
         </button>
         {isOpen && (
-          <div style={styles.dropdownMenu}>
+          <div style={isDarkMode ? styles.dropdownMenuDark : styles.dropdownMenuLight}>
             {Object.entries(CURRENCIES).map(([code, curr]) => (
               <button
                 key={code}
@@ -133,13 +149,13 @@ export default function CurrencyConverter() {
                   onChange(code);
                   setIsOpen(false);
                 }}
-                style={{...styles.dropdownItem, ...(value === code ? styles.dropdownItemActive : {})}}
+                style={{...(isDarkMode ? styles.dropdownItemDark : styles.dropdownItemLight), ...(value === code ? styles.dropdownItemActive : {})}}
               >
                 <div style={styles.dropdownItemContent}>
                   <span style={styles.dropdownCode}>{code}</span>
-                  <span style={styles.dropdownName}>{curr.name}</span>
+                  <span style={isDarkMode ? styles.dropdownNameDark : styles.dropdownNameLight}>{curr.name}</span>
                 </div>
-                <span style={styles.dropdownSymbol}>{curr.symbol}</span>
+                <span style={isDarkMode ? styles.dropdownSymbolDark : styles.dropdownSymbolLight}>{curr.symbol}</span>
               </button>
             ))}
           </div>
@@ -150,196 +166,379 @@ export default function CurrencyConverter() {
 
   return (
     <>
-      <div style={styles.container}>
-        <div style={styles.wrapper}>
-          <div style={styles.header}>
-            <div style={styles.titleRow}>
-              <DollarSign style={styles.headerIcon} />
-              <h1 style={styles.title}>Currency Exchange</h1>
+      <Head>
+        <title>Currency Converter | EventMappr</title>
+        <meta name="description" content="Real-time currency conversion for global travelers" />
+      </Head>
+
+      {/* CSS Variables for theming */}
+      <style jsx global>{`
+        :root {
+          --bg-primary: #ffffff;
+          --bg-secondary: #f8fafc;
+          --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%);
+          --text-primary: #1f2937;
+          --text-secondary: #6b7280;
+          --text-muted: #9ca3af;
+          --border-color: #e5e7eb;
+          --card-bg: #ffffff;
+          --card-border: #e5e7eb;
+          --input-bg: #f9fafb;
+          --button-bg: #f3f4f6;
+        }
+
+        html.dark {
+          --bg-primary: #000000;
+          --bg-secondary: #111111;
+          --bg-gradient: #000000;
+          --text-primary: #ffffff;
+          --text-secondary: #e5e7eb;
+          --text-muted: #9ca3af;
+          --border-color: #374151;
+          --card-bg: #000000;
+          --card-border: #374151;
+          --input-bg: #111111;
+          --button-bg: #1f2937;
+        }
+      `}</style>
+
+      <div className={`currency-converter${isDarkMode ? ' dark' : ''}`}>
+        <div className="wrapper">
+          <div className="header">
+            <div className="title-row">
+              <DollarSign className="header-icon" />
+              <h1 className="title">Currency Exchange</h1>
             </div>
-            <p style={styles.subtitle}>Real-time currency conversion for global travelers</p>
+            <p className="subtitle">Real-time currency conversion for global travelers</p>
           </div>
           {alertMessage && (
-  <div style={styles.alertBox}>
-    <span>{alertMessage}</span>
-    <button onClick={() => setAlertMessage("")} style={styles.alertCloseBtn}>
-      &times;
-    </button>
-  </div>
-)}
+            <div className="alert-box">
+              <span>{alertMessage}</span>
+              <button onClick={() => setAlertMessage("")} className="alert-close">
+                &times;
+              </button>
+            </div>
+          )}
 
-          <div style={styles.mainGrid}>
-  <div style={styles.leftColumn}>
-    <div style={styles.card}>
-      <h2 style={styles.cardTitle}>
-        <ArrowRightLeft style={styles.cardIcon} />
-        Convert Currency
-      </h2>
-      
-      <div style={styles.formSection}>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Amount</label>
-          <input
-            type="number"
-            placeholder="0.00"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            style={styles.input}
-          />
-        </div>
-
-        <div style={styles.selectRow}>
-          <CustomDropdown
-            value={from}
-            onChange={setFrom}
-            isOpen={fromDropdownOpen}
-            setIsOpen={setFromDropdownOpen}
-            label="From"
-          />
-          <CustomDropdown
-            value={to}
-            onChange={setTo}
-            isOpen={toDropdownOpen}
-            setIsOpen={setToDropdownOpen}
-            label="To"
-          />
-        </div>
-
-        <div style={styles.buttonRow}>
-          <button 
-            onClick={swapCurrencies} 
-            style={styles.swapButton}
-            onMouseOver={(e) => e.currentTarget.style.transform = styles.swapButtonHover.transform}
-            onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
-          >
-            <ArrowRightLeft style={styles.buttonIcon} />
-            Swap
-          </button>
-          <button 
-            onClick={convertCurrency} 
-            style={styles.convertButton}
-            onMouseOver={(e) => e.currentTarget.style.transform = styles.convertButtonHover.transform}
-            onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
-          >
-            Convert
-          </button>
-        </div>
-
-        {showResult && (
-          <div style={styles.resultCard}>
-            <div style={styles.resultContent}>
-              <p style={styles.resultLabel}>{amount} {from} equals</p>
-              <p style={styles.resultAmount}>
-                {converted} {CURRENCIES[to].symbol}
-              </p>
-              <p style={styles.resultRate}>
-                Rate: 1 {from} = {RATES[from][to]} {to}
-              </p>
+          <div className="main-grid">
+            <div className="left-column">
+              <div className="card">
+                <h2 style={isDarkMode ? styles.cardTitleDark : styles.cardTitleLight}>
+                  <ArrowRightLeft style={styles.cardIcon} />
+                  Convert Currency
+                </h2>
+                <div style={styles.formSection}>
+                  <div style={styles.inputGroup}>
+                    <label style={isDarkMode ? styles.labelDark : styles.labelLight}>Amount</label>
+                    <input
+                      type="number"
+                      placeholder="0.00"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      style={isDarkMode ? styles.inputDark : styles.inputLight}
+                    />
+                  </div>
+                  <div style={styles.selectRow}>
+                    <CustomDropdown
+                      value={from}
+                      onChange={setFrom}
+                      isOpen={fromDropdownOpen}
+                      setIsOpen={setFromDropdownOpen}
+                      label="From"
+                    />
+                    <CustomDropdown
+                      value={to}
+                      onChange={setTo}
+                      isOpen={toDropdownOpen}
+                      setIsOpen={setToDropdownOpen}
+                      label="To"
+                    />
+                  </div>
+                  <div style={styles.buttonRow}>
+                    <button 
+                      onClick={swapCurrencies} 
+                      style={isDarkMode ? styles.swapButtonDark : styles.swapButtonLight}
+                    >
+                      <ArrowRightLeft style={styles.buttonIcon} />
+                      Swap
+                    </button>
+                    <button 
+                      onClick={convertCurrency} 
+                      style={styles.convertButton}
+                    >
+                      Convert
+                    </button>
+                  </div>
+                  {showResult && (
+                    <div style={isDarkMode ? styles.resultCardDark : styles.resultCardLight}>
+                      <div style={styles.resultContent}>
+                        <p style={isDarkMode ? styles.resultLabelDark : styles.resultLabelLight}>{amount} {from} equals</p>
+                        <p style={isDarkMode ? styles.resultAmountDark : styles.resultAmountLight}>
+                          {converted} {CURRENCIES[to].symbol}
+                        </p>
+                        <p style={isDarkMode ? styles.resultRateDark : styles.resultRateLight}>
+                          Rate: 1 {from} = {RATES[from][to]} {to}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div style={isDarkMode ? styles.cardDark : styles.cardLight}>
+                <h3 style={isDarkMode ? styles.sectionTitleDark : styles.sectionTitleLight}>Popular USD Rates</h3>
+                <div style={styles.popularGrid}>
+                  {popular.map((p) => (
+                    <div 
+                      key={p.code} 
+                      style={isDarkMode ? styles.popularCardDark : styles.popularCardLight}
+                    >
+                      <p style={isDarkMode ? styles.popularCodeDark : styles.popularCodeLight}>{p.code}</p>
+                      <p style={isDarkMode ? styles.popularValueDark : styles.popularValueLight}>{p.value} {p.symbol}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div style={styles.rightColumn}>
+              <div style={isDarkMode ? styles.cardDark : styles.cardLight}>
+                <h2 style={isDarkMode ? styles.cardTitleDark : styles.cardTitleLight}>
+                  <TrendingUp style={styles.cardIcon} />
+                  {from} → {to} Trend
+                </h2>
+                <div style={styles.chartContainer}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={graphData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? "#4a5568" : "#e2e8f0"} />
+                      <XAxis dataKey="day" stroke={isDarkMode ? "#a0aec0" : "#6b7280"} />
+                      <YAxis stroke={isDarkMode ? "#a0aec0" : "#6b7280"} domain={['dataMin - 0.01', 'dataMax + 0.01']} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: isDarkMode ? '#2d3748' : '#ffffff',
+                          border: isDarkMode ? '1px solid #4a5568' : '1px solid #e2e8f0',
+                          borderRadius: '12px',
+                          color: isDarkMode ? '#e2e8f0' : '#1f2937',
+                          boxShadow: isDarkMode ? '0 10px 15px -3px rgba(0, 0, 0, 0.3)' : '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                        }}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="value"
+                        stroke="#63b3ed"
+                        strokeWidth={2}
+                        dot={{ fill: '#63b3ed', strokeWidth: 2, r: 3 }}
+                        activeDot={{ r: 5, stroke: '#63b3ed', strokeWidth: 2 }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
             </div>
           </div>
-        )}
-      </div>
-    </div>
-
-    <div style={styles.card}>
-      <h3 style={styles.sectionTitle}>Popular USD Rates</h3>
-      <div style={styles.popularGrid}>
-        {popular.map((p) => (
-          <div 
-            key={p.code} 
-            style={styles.popularCard}
-            onMouseOver={(e) => e.currentTarget.style.boxShadow = styles.popularCardHover.boxShadow}
-            onMouseOut={(e) => e.currentTarget.style.boxShadow = styles.popularCard.boxShadow}
-          >
-            <p style={styles.popularCode}>{p.code}</p>
-            <p style={styles.popularValue}>{p.value} {p.symbol}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-
-  <div style={styles.rightColumn}>
-    <div style={styles.card}>
-      <h2 style={styles.cardTitle}>
-        <TrendingUp style={styles.cardIcon} />
-        {from} → {to} Trend
-      </h2>
-      <div style={styles.chartContainer}>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={graphData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#4a5568" />
-            <XAxis dataKey="day" stroke="#a0aec0" />
-            <YAxis stroke="#a0aec0" domain={['dataMin - 0.01', 'dataMax + 0.01']} />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#2d3748',
-                border: '1px solid #4a5568',
-                borderRadius: '12px',
-                color: '#e2e8f0',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)'
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="value"
-              stroke="#63b3ed"
-              strokeWidth={2}
-              dot={{ fill: '#63b3ed', strokeWidth: 2, r: 3 }}
-              activeDot={{ r: 5, stroke: '#63b3ed', strokeWidth: 2 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  </div>
-</div>
         </div>
       </div>
-
       <style jsx>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        .currency-converter {
+          min-height: 100vh;
+          background: var(--bg-gradient);
+          color: var(--text-primary);
+          padding: 32px 16px;
+          font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .wrapper {
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        .header {
+          text-align: center;
+          margin-bottom: 48px;
+        }
+
+        .title-row {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin-bottom: 16px;
+        }
+
+        .header-icon {
+          width: 32px;
+          height: 32px;
+          color: #059669;
+        }
+
+        .title {
+          font-size: 3rem;
+          font-weight: 700;
+          background: linear-gradient(90deg, #059669, #0ea5e9, #8b5cf6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+          color: var(--text-secondary);
+          font-size: 1.125rem;
+        }
+
+        .theme-toggle {
+          background: var(--button-bg);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          padding: 8px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          color: var(--text-primary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .theme-toggle:hover {
+          background: var(--bg-secondary);
+          transform: scale(1.05);
+        }
+
+        .main-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+        }
+
+        .left-column {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .card {
+          background: var(--card-bg);
+          border-radius: 16px;
+          padding: 32px;
+          border: 1px solid var(--card-border);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .alert-box {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background: #059669;
+          color: white;
+          padding: 16px 24px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-weight: 600;
+          max-width: 320px;
+          z-index: 1000;
+        }
+
+        .alert-close {
+          background: transparent;
+          border: none;
+          color: white;
+          font-size: 20px;
+          font-weight: 700;
+          cursor: pointer;
+          line-height: 1;
+        }
+
+        @media (max-width: 1024px) {
+          .main-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .title {
+            font-size: 2.5rem;
+          }
+          .currency-converter {
+            padding: 24px 12px;
+          }
+        }
       `}</style>
     </>
   );
 }
 
 const styles = {
-  container: {
+  // Light Theme Styles
+  containerLight: {
     minHeight: '100vh',
     background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%)',
     padding: '32px 16px',
-    fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif'
+    fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
+    color: '#1f2937'
+  },
+  // Dark Theme Styles
+  containerDark: {
+    minHeight: '100vh',
+    background: '#000000',
+    padding: '32px 16px',
+    fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
+    color: '#ffffff'
   },
   wrapper: {
     maxWidth: '1400px',
     margin: '0 auto'
   },
+  // Theme Toggle Button
+  themeToggleLight: {
+    background: '#f3f4f6',
+    border: '1px solid #d1d5db',
+    borderRadius: '8px',
+    padding: '8px',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    color: '#374151',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  themeToggleDark: {
+    background: '#374151',
+    border: '1px solid #4b5563',
+    borderRadius: '8px',
+    padding: '8px',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    color: '#f9fafb',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   alertBox: {
-  position: "fixed",
-  bottom: "20px",
-  right: "20px",
-  backgroundColor: "#059669",
-  color: "white",
-  padding: "16px 24px",
-  borderRadius: "12px",
-  boxShadow: "0 4px 12px rgba(5, 150, 105, 0.4)",
-  display: "flex",
-  alignItems: "center",
-  gap: "12px",
-  fontWeight: "600",
-  maxWidth: "320px",
-  zIndex: 1000,
-},
-alertCloseBtn: {
-  background: "transparent",
-  border: "none",
-  color: "white",
-  fontSize: "20px",
-  fontWeight: "700",
-  cursor: "pointer",
-  lineHeight: "1",
-},
+    position: "fixed",
+    bottom: "20px",
+    right: "20px",
+    backgroundColor: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)',
+    color: "white",
+    padding: "16px 24px",
+    borderRadius: "12px",
+    boxShadow: "0 4px 12px rgba(5, 150, 105, 0.4)",
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    fontWeight: "600",
+    maxWidth: "320px",
+    zIndex: 1000,
+  },
+  alertCloseBtn: {
+    background: "transparent",
+    border: "none",
+    color: "white",
+    fontSize: "20px",
+    fontWeight: "700",
+    cursor: "pointer",
+    lineHeight: "1",
+  },
   header: {
     textAlign: 'center',
     marginBottom: '48px'
@@ -365,7 +564,7 @@ alertCloseBtn: {
     backgroundClip: 'text'
   },
   subtitle: {
-    color: '#64748b',
+    color: '#a0a0a0',
     fontSize: '1.125rem'
   },
   mainGrid: {
@@ -386,11 +585,12 @@ alertCloseBtn: {
     flexDirection: 'column'
   },
   card: {
-    background: 'white',
+    background: '#000000',
     borderRadius: '16px',
     padding: '32px',
-    border: '1px solid #e2e8f0',
-    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+    border: '1px solid #333333',
+    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
+    color: '#ffffff'
   },
   cardTitle: {
     display: 'flex',
@@ -398,7 +598,7 @@ alertCloseBtn: {
     gap: '8px',
     fontSize: '1.5rem',
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#ffffff',
     marginBottom: '24px'
   },
   cardIcon: {
@@ -419,22 +619,22 @@ alertCloseBtn: {
     display: 'block',
     fontSize: '0.875rem',
     fontWeight: '500',
-    color: '#374151',
+    color: '#e2e8f0',
     marginBottom: '8px'
   },
   input: {
     width: '100%',
     padding: '16px',
-    background: '#f8fafc',
-    border: '1px solid #e2e8f0',
+    background: '#000000',
+    border: '1px solid #333333',
     borderRadius: '12px',
-    color: '#1e293b',
+    color: '#ffffff',
     fontSize: '1.125rem',
     outline: 'none',
     transition: 'all 0.2s ease',
     ':focus': {
       borderColor: '#3b82f6',
-      backgroundColor: 'white'
+      backgroundColor: '#111111'
     }
   },
   selectRow: {
@@ -453,10 +653,10 @@ alertCloseBtn: {
   dropdownButton: {
     width: '100%',
     padding: '16px',
-    background: '#f8fafc',
-    border: '1px solid #e2e8f0',
+    background: '#000000',
+    border: '1px solid #333333',
     borderRadius: '12px',
-    color: '#1e293b',
+    color: '#ffffff',
     fontSize: '1rem',
     outline: 'none',
     transition: 'all 0.2s ease',
@@ -468,7 +668,7 @@ alertCloseBtn: {
   },
   dropdownButtonOpen: {
     borderColor: '#3b82f6',
-    backgroundColor: 'white',
+    backgroundColor: '#111111',
     boxShadow: '0 0 0 3px rgba(59, 130, 246, 0.1)'
   },
   dropdownSelected: {
@@ -482,12 +682,12 @@ alertCloseBtn: {
   },
   currencyName: {
     fontSize: '0.875rem',
-    color: '#6b7280'
+    color: '#a0a0a0'
   },
   chevronIcon: {
     width: '20px',
     height: '20px',
-    color: '#6b7280',
+    color: '#a0a0a0',
     transition: 'transform 0.2s ease'
   },
   chevronRotated: {
@@ -499,13 +699,13 @@ alertCloseBtn: {
     left: '0',
     right: '0',
     zIndex: 50,
-    background: 'white',
-    border: '1px solid #e2e8f0',
+    background: '#000000',
+    border: '1px solid #333333',
     borderRadius: '12px',
     marginTop: '4px',
     maxHeight: '200px',
     overflowY: 'auto',
-    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)'
   },
   dropdownItem: {
     width: '100%',
@@ -518,13 +718,14 @@ alertCloseBtn: {
     justifyContent: 'space-between',
     transition: 'background-color 0.15s ease',
     textAlign: 'left',
+    color: '#ffffff',
     ':hover': {
-      backgroundColor: '#f8fafc'
+      backgroundColor: '#111111'
     }
   },
   dropdownItemActive: {
-    backgroundColor: '#eff6ff',
-    color: '#2563eb'
+    backgroundColor: '#1e3a8a',
+    color: '#93c5fd'
   },
   dropdownItemContent: {
     display: 'flex',
@@ -537,20 +738,20 @@ alertCloseBtn: {
   },
   dropdownName: {
     fontSize: '0.8rem',
-    color: '#6b7280'
+    color: '#a0a0a0'
   },
   dropdownSymbol: {
     fontSize: '1rem',
     fontWeight: '600',
-    color: '#374151'
+    color: '#e2e8f0'
   },
   select: {
     width: '100%',
     padding: '16px',
-    background: '#f8fafc',
-    border: '1px solid #e2e8f0',
+    background: '#000000',
+    border: '1px solid #333333',
     borderRadius: '12px',
-    color: '#1e293b',
+    color: '#ffffff',
     fontSize: '1rem',
     outline: 'none',
     transition: 'all 0.2s ease'
@@ -564,15 +765,15 @@ alertCloseBtn: {
     alignItems: 'center',
     gap: '8px',
     padding: '12px 24px',
-    background: '#f1f5f9',
-    border: '1px solid #e2e8f0',
+    background: '#111111',
+    border: '1px solid #333333',
     borderRadius: '12px',
-    color: '#475569',
+    color: '#ffffff',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
     fontSize: '1rem',
     ':hover': {
-      backgroundColor: '#e2e8f0'
+      backgroundColor: '#222222'
     }
   },
   buttonIcon: {
@@ -597,33 +798,33 @@ alertCloseBtn: {
     }
   },
   resultCard: {
-    background: 'linear-gradient(90deg, #ecfdf5, #dbeafe)',
+    background: 'linear-gradient(90deg, #001a0d, #001133)',
     borderRadius: '12px',
     padding: '24px',
-    border: '1px solid #a7f3d0'
+    border: '1px solid #059669'
   },
   resultContent: {
     textAlign: 'center'
   },
   resultLabel: {
-    color: '#6b7280',
+    color: '#a0a0a0',
     marginBottom: '8px',
     fontSize: '0.875rem'
   },
   resultAmount: {
     fontSize: '2rem',
     fontWeight: '700',
-    color: '#1e293b'
+    color: '#ffffff'
   },
   resultRate: {
     fontSize: '0.875rem',
-    color: '#6b7280',
+    color: '#a0a0a0',
     marginTop: '8px'
   },
   sectionTitle: {
     fontSize: '1.25rem',
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#ffffff',
     marginBottom: '16px'
   },
   popularGrid: {
@@ -632,27 +833,359 @@ alertCloseBtn: {
     gap: '16px'
   },
   popularCard: {
-    background: '#f8fafc',
+    background: '#3a3a3a',
     borderRadius: '8px',
     padding: '16px',
-    border: '1px solid #e2e8f0',
+    border: '1px solid #555555',
     textAlign: 'center',
     transition: 'all 0.2s ease',
     ':hover': {
-      backgroundColor: '#f1f5f9'
+      backgroundColor: '#404040'
     }
   },
   popularCode: {
-    color: '#6b7280',
+    color: '#a0a0a0',
     fontSize: '0.875rem',
     fontWeight: '500'
   },
   popularValue: {
-    color: '#1e293b',
+    color: '#ffffff',
     fontWeight: '600',
     marginTop: '4px'
   },
   chartContainer: {
     height: '320px'
+  },
+  
+  // Light Theme Specific Styles
+  subtitleLight: {
+    color: '#64748b',
+    fontSize: '1.125rem'
+  },
+  cardLight: {
+    background: 'white',
+    borderRadius: '16px',
+    padding: '32px',
+    border: '1px solid #e2e8f0',
+    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+    color: '#1f2937'
+  },
+  cardTitleLight: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    fontSize: '1.5rem',
+    fontWeight: '600',
+    color: '#1e293b',
+    marginBottom: '24px'
+  },
+  labelLight: {
+    display: 'block',
+    fontSize: '0.875rem',
+    fontWeight: '500',
+    color: '#374151',
+    marginBottom: '8px'
+  },
+  inputLight: {
+    width: '100%',
+    padding: '16px',
+    background: '#f8fafc',
+    border: '1px solid #e2e8f0',
+    borderRadius: '12px',
+    color: '#1e293b',
+    fontSize: '1.125rem',
+    outline: 'none',
+    transition: 'all 0.2s ease'
+  },
+  swapButtonLight: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '12px 24px',
+    background: '#f1f5f9',
+    border: '1px solid #e2e8f0',
+    borderRadius: '12px',
+    color: '#475569',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    fontSize: '1rem'
+  },
+  resultCardLight: {
+    background: 'linear-gradient(90deg, #ecfdf5, #dbeafe)',
+    borderRadius: '12px',
+    padding: '24px',
+    border: '1px solid #a7f3d0'
+  },
+  resultLabelLight: {
+    color: '#6b7280',
+    marginBottom: '8px',
+    fontSize: '0.875rem'
+  },
+  resultAmountLight: {
+    fontSize: '2rem',
+    fontWeight: '700',
+    color: '#1e293b'
+  },
+  resultRateLight: {
+    fontSize: '0.875rem',
+    color: '#6b7280',
+    marginTop: '8px'
+  },
+  sectionTitleLight: {
+    fontSize: '1.25rem',
+    fontWeight: '600',
+    color: '#1e293b',
+    marginBottom: '16px'
+  },
+  popularCardLight: {
+    background: '#f8fafc',
+    borderRadius: '8px',
+    padding: '16px',
+    border: '1px solid #e2e8f0',
+    textAlign: 'center',
+    transition: 'all 0.2s ease'
+  },
+  popularCodeLight: {
+    color: '#6b7280',
+    fontSize: '0.875rem',
+    fontWeight: '500'
+  },
+  popularValueLight: {
+    color: '#1e293b',
+    fontWeight: '600',
+    marginTop: '4px'
+  },
+  dropdownButtonLight: {
+    width: '100%',
+    padding: '16px',
+    background: '#f8fafc',
+    border: '1px solid #e2e8f0',
+    borderRadius: '12px',
+    color: '#1e293b',
+    fontSize: '1rem',
+    outline: 'none',
+    transition: 'all 0.2s ease',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    textAlign: 'left'
+  },
+  dropdownButtonOpenLight: {
+    borderColor: '#3b82f6',
+    backgroundColor: 'white',
+    boxShadow: '0 0 0 3px rgba(59, 130, 246, 0.1)'
+  },
+  currencyNameLight: {
+    fontSize: '0.875rem',
+    color: '#6b7280'
+  },
+  chevronIconLight: {
+    width: '20px',
+    height: '20px',
+    color: '#6b7280',
+    transition: 'transform 0.2s ease'
+  },
+  dropdownMenuLight: {
+    position: 'absolute',
+    top: '100%',
+    left: '0',
+    right: '0',
+    zIndex: 50,
+    background: 'white',
+    border: '1px solid #e2e8f0',
+    borderRadius: '12px',
+    marginTop: '4px',
+    maxHeight: '200px',
+    overflowY: 'auto',
+    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+  },
+  dropdownItemLight: {
+    width: '100%',
+    padding: '12px 16px',
+    border: 'none',
+    background: 'transparent',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    transition: 'background-color 0.15s ease',
+    textAlign: 'left',
+    color: '#1f2937'
+  },
+  dropdownNameLight: {
+    fontSize: '0.8rem',
+    color: '#6b7280'
+  },
+  dropdownSymbolLight: {
+    fontSize: '1rem',
+    fontWeight: '600',
+    color: '#374151'
+  },
+
+  // Dark Theme Specific Styles
+  subtitleDark: {
+    color: '#a0a0a0',
+    fontSize: '1.125rem'
+  },
+  cardDark: {
+    background: '#000000',
+    borderRadius: '16px',
+    padding: '32px',
+    border: '1px solid #333333',
+    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
+    color: '#ffffff'
+  },
+  cardTitleDark: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    fontSize: '1.5rem',
+    fontWeight: '600',
+    color: '#ffffff',
+    marginBottom: '24px'
+  },
+  labelDark: {
+    display: 'block',
+    fontSize: '0.875rem',
+    fontWeight: '500',
+    color: '#e2e8f0',
+    marginBottom: '8px'
+  },
+  inputDark: {
+    width: '100%',
+    padding: '16px',
+    background: '#000000',
+    border: '1px solid #333333',
+    borderRadius: '12px',
+    color: '#ffffff',
+    fontSize: '1.125rem',
+    outline: 'none',
+    transition: 'all 0.2s ease'
+  },
+  swapButtonDark: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '12px 24px',
+    background: '#111111',
+    border: '1px solid #333333',
+    borderRadius: '12px',
+    color: '#ffffff',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    fontSize: '1rem'
+  },
+  resultCardDark: {
+    background: 'linear-gradient(90deg, #001a0d, #001133)',
+    borderRadius: '12px',
+    padding: '24px',
+    border: '1px solid #059669'
+  },
+  resultLabelDark: {
+    color: '#a0a0a0',
+    marginBottom: '8px',
+    fontSize: '0.875rem'
+  },
+  resultAmountDark: {
+    fontSize: '2rem',
+    fontWeight: '700',
+    color: '#ffffff'
+  },
+  resultRateDark: {
+    fontSize: '0.875rem',
+    color: '#a0a0a0',
+    marginTop: '8px'
+  },
+  sectionTitleDark: {
+    fontSize: '1.25rem',
+    fontWeight: '600',
+    color: '#ffffff',
+    marginBottom: '16px'
+  },
+  popularCardDark: {
+    background: '#000000',
+    borderRadius: '8px',
+    padding: '16px',
+    border: '1px solid #333333',
+    textAlign: 'center',
+    transition: 'all 0.2s ease'
+  },
+  popularCodeDark: {
+    color: '#a0a0a0',
+    fontSize: '0.875rem',
+    fontWeight: '500'
+  },
+  popularValueDark: {
+    color: '#ffffff',
+    fontWeight: '600',
+    marginTop: '4px'
+  },
+  dropdownButtonDark: {
+    width: '100%',
+    padding: '16px',
+    background: '#000000',
+    border: '1px solid #333333',
+    borderRadius: '12px',
+    color: '#ffffff',
+    fontSize: '1rem',
+    outline: 'none',
+    transition: 'all 0.2s ease',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    textAlign: 'left'
+  },
+  dropdownButtonOpenDark: {
+    borderColor: '#3b82f6',
+    backgroundColor: '#111111',
+    boxShadow: '0 0 0 3px rgba(59, 130, 246, 0.1)'
+  },
+  currencyNameDark: {
+    fontSize: '0.875rem',
+    color: '#a0a0a0'
+  },
+  chevronIconDark: {
+    width: '20px',
+    height: '20px',
+    color: '#a0a0a0',
+    transition: 'transform 0.2s ease'
+  },
+  dropdownMenuDark: {
+    position: 'absolute',
+    top: '100%',
+    left: '0',
+    right: '0',
+    zIndex: 50,
+    background: '#000000',
+    border: '1px solid #333333',
+    borderRadius: '12px',
+    marginTop: '4px',
+    maxHeight: '200px',
+    overflowY: 'auto',
+    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)'
+  },
+  dropdownItemDark: {
+    width: '100%',
+    padding: '12px 16px',
+    border: 'none',
+    background: 'transparent',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    transition: 'background-color 0.15s ease',
+    textAlign: 'left',
+    color: '#ffffff'
+  },
+  dropdownNameDark: {
+    fontSize: '0.8rem',
+    color: '#a0a0a0'
+  },
+  dropdownSymbolDark: {
+    fontSize: '1rem',
+    fontWeight: '600',
+    color: '#e2e8f0'
   }
 };

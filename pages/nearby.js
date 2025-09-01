@@ -3,6 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconRetina from 'leaflet/dist/images/marker-icon-2x.png';
 import shadow from 'leaflet/dist/images/marker-shadow.png';
+import Navbar from '../components/layout/Navbar';
 
 
 export default function NearbyPage() {
@@ -11,6 +12,7 @@ export default function NearbyPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [retryCount, setRetryCount] = useState(0);
+  const [isThemeDark, setIsThemeDark] = useState(false);
   const mapRef = useRef(null);
   const leafletMap = useRef(null);
   const radius = 2000;
@@ -182,6 +184,26 @@ export default function NearbyPage() {
     return () => window.removeEventListener('scroll', animateOnScroll);
   }, []);
 
+  // Theme detection useEffect
+  useEffect(() => {
+    const checkTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setIsThemeDark(isDark);
+    };
+
+    // Check initial theme
+    checkTheme();
+
+    // Listen for theme changes
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const handleFindNearby = () => {
     if (!navigator.geolocation) {
       setError('Geolocation is not supported by your browser.');
@@ -283,9 +305,26 @@ export default function NearbyPage() {
     return labels[type] || 'Place';
   };
 
+  // Styles object like currency-converter
+  const containerStyles = {
+    light: {
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f8fbff 0%, #e3f2fd 100%)',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      transition: 'all 0.3s ease'
+    },
+    dark: {
+      minHeight: '100vh',
+      background: '#000000',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      transition: 'all 0.3s ease'
+    }
+  };
+
   return (
     <>
-   <div className="nearby-container">
+      <Navbar />
+      <div style={isThemeDark ? containerStyles.dark : containerStyles.light}>
       <div className="nearby-page">
         <div className="page-header">
           <div className="header-content">
@@ -466,13 +505,28 @@ export default function NearbyPage() {
     </div>
 
      <style jsx>{`
-        /* Nearby Places Component Styles - Subtle Blue Theme */
+        /* CSS Variables for Theme Management */
+        :global(:root) {
+          --bg-primary: #f8fbff;
+          --bg-secondary: #e3f2fd;
+          --text-primary: #1565c0;
+          --text-secondary: #546e7a;
+          --border-color: #e3f2fd;
+          --card-bg: #ffffff;
+          --shadow: rgba(25, 118, 210, 0.1);
+        }
 
-.nearby-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f8fbff 0%, #e3f2fd 100%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
+        :global(.dark-theme) {
+          --bg-primary: #000000;
+          --bg-secondary: #000000;
+          --text-primary: #ffffff;
+          --text-secondary: #cccccc;
+          --border-color: #333333;
+          --card-bg: #111111;
+          --shadow: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Nearby Places Component Styles - Theme Responsive */
 
 .nearby-page {
   max-width: 1200px;
@@ -505,26 +559,29 @@ export default function NearbyPage() {
   font-size: 3rem;
   margin-bottom: 16px;
   display: inline-block;
-  background: linear-gradient(135deg, #1976d2, #42a5f5);
+  background: ${isThemeDark ? 'linear-gradient(135deg, #ffffff, #cccccc)' : 'linear-gradient(135deg, #1976d2, #42a5f5)'};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  transition: background 0.3s ease;
 }
 
 .page-header h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1565c0;
+  color: ${isThemeDark ? '#ffffff' : '#1565c0'};
   margin: 0 0 12px 0;
   letter-spacing: -0.02em;
+  transition: color 0.3s ease;
 }
 
 .page-description {
   font-size: 1.1rem;
-  color: #546e7a;
+  color: ${isThemeDark ? '#cccccc' : '#546e7a'};
   margin: 0;
   max-width: 600px;
   margin: 0 auto;
+  transition: color 0.3s ease;
 }
 
 .header-bg-pattern {
@@ -533,9 +590,11 @@ export default function NearbyPage() {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: radial-gradient(circle at 20% 80%, rgba(25, 118, 210, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(66, 165, 245, 0.1) 0%, transparent 50%);
+  background-image: ${isThemeDark ? 
+    'radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 50%)' :
+    'radial-gradient(circle at 20% 80%, rgba(25, 118, 210, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(66, 165, 245, 0.1) 0%, transparent 50%)'};
   pointer-events: none;
+  transition: background-image 0.3s ease;
 }
 
 /* Action Section */
@@ -607,10 +666,11 @@ export default function NearbyPage() {
   display: flex;
   align-items: center;
   gap: 16px;
-  color: #78909c;
+  color: ${isThemeDark ? '#aaaaaa' : '#78909c'};
   font-size: 0.9rem;
   width: 100%;
   max-width: 400px;
+  transition: color 0.3s ease;
 }
 
 .divider::before,
@@ -618,7 +678,7 @@ export default function NearbyPage() {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #b0bec5, transparent);
+  background: ${isThemeDark ? 'linear-gradient(90deg, transparent, #555555, transparent)' : 'linear-gradient(90deg, transparent, #b0bec5, transparent)'};
 }
 
 /* Search Form */
@@ -630,16 +690,16 @@ export default function NearbyPage() {
 .search-input-wrapper {
   position: relative;
   display: flex;
-  background: white;
+  background: ${isThemeDark ? '#222222' : 'white'};
   border-radius: 50px;
-  box-shadow: 0 4px 20px rgba(25, 118, 210, 0.1);
-  border: 2px solid #e3f2fd;
+  box-shadow: 0 4px 20px ${isThemeDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(25, 118, 210, 0.1)'};
+  border: 2px solid ${isThemeDark ? '#444444' : '#e3f2fd'};
   transition: all 0.3s ease;
 }
 
 .search-input-wrapper:focus-within {
-  border-color: #1976d2;
-  box-shadow: 0 4px 25px rgba(25, 118, 210, 0.2);
+  border-color: ${isThemeDark ? '#666666' : '#1976d2'};
+  box-shadow: 0 4px 25px ${isThemeDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(25, 118, 210, 0.2)'};
 }
 
 .search-icon {
@@ -647,8 +707,9 @@ export default function NearbyPage() {
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  color: #78909c;
+  color: ${isThemeDark ? '#aaaaaa' : '#78909c'};
   pointer-events: none;
+  transition: color 0.3s ease;
 }
 
 .search-input {
@@ -659,11 +720,12 @@ export default function NearbyPage() {
   font-size: 1rem;
   outline: none;
   background: transparent;
-  color: #37474f;
+  color: ${isThemeDark ? '#ffffff' : '#37474f'};
+  transition: color 0.3s ease;
 }
 
 .search-input::placeholder {
-  color: #90a4ae;
+  color: ${isThemeDark ? '#888888' : '#90a4ae'};
 }
 
 .search-btn {
@@ -696,16 +758,17 @@ export default function NearbyPage() {
   width: 100%;
   height: 400px;
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
-  border: 2px solid #e3f2fd;
-  background: #f8fbff;
+  box-shadow: 0 8px 32px ${isThemeDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(25, 118, 210, 0.15)'};
+  border: 2px solid ${isThemeDark ? '#444444' : '#e3f2fd'};
+  background: ${isThemeDark ? '#222222' : '#f8fbff'};
+  transition: all 0.3s ease;
 }
 
 .location-badge {
   position: absolute;
   bottom: 16px;
   left: 16px;
-  background: rgba(255, 255, 255, 0.95);
+  background: ${isThemeDark ? 'rgba(34, 34, 34, 0.95)' : 'rgba(255, 255, 255, 0.95)'};
   backdrop-filter: blur(10px);
   padding: 8px 16px;
   border-radius: 20px;
@@ -713,6 +776,9 @@ export default function NearbyPage() {
   align-items: center;
   gap: 8px;
   font-size: 0.875rem;
+  color: ${isThemeDark ? '#ffffff' : 'inherit'};
+  border: 1px solid ${isThemeDark ? '#555555' : 'transparent'};
+  transition: all 0.3s ease;
   color: #1565c0;
   font-weight: 500;
   box-shadow: 0 4px 16px rgba(25, 118, 210, 0.2);
@@ -721,8 +787,8 @@ export default function NearbyPage() {
 
 /* Error Message */
 .error-message {
-  background: linear-gradient(135deg, #ffebee, #fce4ec);
-  border: 1px solid #f8bbd9;
+  background: ${isThemeDark ? 'linear-gradient(135deg, #2d1b1b, #3d2020)' : 'linear-gradient(135deg, #ffebee, #fce4ec)'};
+  border: 1px solid ${isThemeDark ? '#555555' : '#f8bbd9'};
   border-radius: 12px;
   padding: 16px 20px;
   margin: 20px 0;
@@ -730,20 +796,22 @@ export default function NearbyPage() {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  transition: all 0.3s ease;
 }
 
 .error-content {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #c62828;
+  color: ${isThemeDark ? '#ff6b6b' : '#c62828'};
   flex: 1;
+  transition: color 0.3s ease;
 }
 
 .retry-btn {
-  background: #e3f2fd;
-  color: #1976d2;
-  border: 1px solid #bbdefb;
+  background: ${isThemeDark ? '#333333' : '#e3f2fd'};
+  color: ${isThemeDark ? '#ffffff' : '#1976d2'};
+  border: 1px solid ${isThemeDark ? '#555555' : '#bbdefb'};
   padding: 8px 16px;
   border-radius: 8px;
   font-size: 0.875rem;
@@ -753,7 +821,7 @@ export default function NearbyPage() {
 }
 
 .retry-btn:hover {
-  background: #bbdefb;
+  background: ${isThemeDark ? '#444444' : '#bbdefb'};
 }
 
 /* Results Section */
@@ -769,21 +837,24 @@ export default function NearbyPage() {
 .results-header h2 {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #1565c0;
+  color: ${isThemeDark ? '#ffffff' : '#1565c0'};
   margin: 0 0 8px 0;
+  transition: color 0.3s ease;
 }
 
 .results-header p {
-  color: #546e7a;
+  color: ${isThemeDark ? '#cccccc' : '#546e7a'};
   font-size: 1rem;
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 /* Empty State */
 .empty-state {
   text-align: center;
   padding: 60px 20px;
-  color: #546e7a;
+  color: ${isThemeDark ? '#cccccc' : '#546e7a'};
+  transition: color 0.3s ease;
 }
 
 .empty-icon {
@@ -794,8 +865,9 @@ export default function NearbyPage() {
 
 .empty-state h3 {
   font-size: 1.5rem;
-  color: #37474f;
+  color: ${isThemeDark ? '#ffffff' : '#37474f'};
   margin: 0 0 8px 0;
+  transition: color 0.3s ease;
 }
 
 .empty-state p {
@@ -803,6 +875,8 @@ export default function NearbyPage() {
   margin: 0;
   max-width: 400px;
   margin: 0 auto;
+  color: ${isThemeDark ? '#cccccc' : 'inherit'};
+  transition: color 0.3s ease;
 }
 
 /* Places Grid */
@@ -814,11 +888,11 @@ export default function NearbyPage() {
 }
 
 .place-card {
-  background: white;
+  background: ${isThemeDark ? '#111111' : 'white'};
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 4px 20px rgba(25, 118, 210, 0.08);
-  border: 1px solid #e3f2fd;
+  box-shadow: 0 4px 20px ${isThemeDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(25, 118, 210, 0.08)'};
+  border: 1px solid ${isThemeDark ? '#333333' : '#e3f2fd'};
   transition: all 0.3s ease;
   opacity: 0;
   transform: translateY(20px);
@@ -827,8 +901,8 @@ export default function NearbyPage() {
 
 .place-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(25, 118, 210, 0.15);
-  border-color: #bbdefb;
+  box-shadow: 0 12px 40px ${isThemeDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(25, 118, 210, 0.15)'};
+  border-color: ${isThemeDark ? '#555555' : '#bbdefb'};
 }
 
 .place-header {
@@ -857,21 +931,23 @@ export default function NearbyPage() {
 .place-name {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1565c0;
+  color: ${isThemeDark ? '#ffffff' : '#1565c0'};
   margin: 0 0 4px 0;
   line-height: 1.2;
+  transition: color 0.3s ease;
 }
 
 .place-type {
   display: inline-block;
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  color: #1976d2;
+  background: ${isThemeDark ? 'linear-gradient(135deg, #333333, #555555)' : 'linear-gradient(135deg, #e3f2fd, #bbdefb)'};
+  color: ${isThemeDark ? '#ffffff' : '#1976d2'};
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  transition: all 0.3s ease;
 }
 
 /* Place Details */
@@ -887,16 +963,18 @@ export default function NearbyPage() {
   align-items: center;
   gap: 8px;
   font-size: 0.9rem;
-  color: #546e7a;
+  color: ${isThemeDark ? '#cccccc' : '#546e7a'};
+  transition: color 0.3s ease;
 }
 
 .detail-item svg {
-  color: #78909c;
+  color: ${isThemeDark ? '#aaaaaa' : '#78909c'};
   flex-shrink: 0;
+  transition: color 0.3s ease;
 }
 
 .detail-item a {
-  color: #1976d2;
+  color: ${isThemeDark ? '#ffffff' : '#1976d2'};
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -910,28 +988,29 @@ export default function NearbyPage() {
 .place-actions {
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid #e3f2fd;
+  border-top: 1px solid ${isThemeDark ? '#444444' : '#e3f2fd'};
+  transition: border-color 0.3s ease;
 }
 
 .view-map-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  color: #1976d2;
+  background: ${isThemeDark ? 'linear-gradient(135deg, #333333, #555555)' : 'linear-gradient(135deg, #e3f2fd, #bbdefb)'};
+  color: ${isThemeDark ? '#ffffff' : '#1976d2'};
   text-decoration: none;
   padding: 10px 20px;
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 500;
   transition: all 0.3s ease;
-  border: 1px solid rgba(25, 118, 210, 0.2);
+  border: 1px solid ${isThemeDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(25, 118, 210, 0.2)'};
 }
 
 .view-map-btn:hover {
-  background: linear-gradient(135deg, #bbdefb, #90caf9);
+  background: ${isThemeDark ? 'linear-gradient(135deg, #444444, #666666)' : 'linear-gradient(135deg, #bbdefb, #90caf9)'};
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+  box-shadow: 0 4px 12px ${isThemeDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(25, 118, 210, 0.2)'};
 }
 
 /* Animations */

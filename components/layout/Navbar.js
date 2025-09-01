@@ -24,6 +24,13 @@ const Navbar = () => {
       if (savedTheme === "dark") {
         setIsDarkMode(true);
         document.documentElement.setAttribute("data-theme", "dark");
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
+      } else {
+        setIsDarkMode(false);
+        document.documentElement.setAttribute("data-theme", "light");
+        document.documentElement.classList.add("light");
+        document.documentElement.classList.remove("dark");
       }
     }
 
@@ -86,7 +93,18 @@ const Navbar = () => {
   const toggleTheme = () => {
     const newTheme = !isDarkMode ? "dark" : "light";
     setIsDarkMode(!isDarkMode);
+    
+    // Set both data-theme attribute and classList for compatibility
     document.documentElement.setAttribute("data-theme", newTheme);
+    
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+    }
+    
     localStorage.setItem("theme", newTheme);
   };
 
