@@ -49,5 +49,10 @@
     "postcss": "^8.5.12",
     "tailwindcss": "^4.1.11",
     "vite-plugin-compression": "^0.5.1"
+  },
+  "overrides": {
+    "source-map-js": "1.2.2",
+    "svgo": "2.8.1",
+    "vite": "8.0.16"
   }
 }
